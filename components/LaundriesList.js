@@ -5,23 +5,34 @@ import {
   ScrollView,
   Image,
   StyleSheet,
-  SafeAreaView,
+  TouchableOpacity,
 } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-const Laundry = ({ data }) => {
+const LaundriesList = ({ data }) => {
+  const navigation = useNavigation();
+
+  const handleLaundryPress = (id) => {
+    navigation.navigate("LaundryDetails", { id });
+  };
+
   return (
     <ScrollView style={styles.container}>
       {data.map((item) => (
-        <View style={styles.itemContainer} key={item.id}>
+        <TouchableOpacity
+          key={item.id}
+          style={styles.itemContainer}
+          onPress={() => handleLaundryPress(item.id)}
+        >
           <View style={styles.item}>
-            <Image source={item.image} style={styles.image} />
+            <Image source={{ uri: item.image }} style={styles.image} />
             <View style={styles.detailsContainer}>
               <Text style={styles.name}>{item.name}</Text>
               <Text style={styles.location}>{item.location}</Text>
               <Text style={styles.review}>Review: {item.review}</Text>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       ))}
     </ScrollView>
   );
@@ -35,9 +46,9 @@ const styles = StyleSheet.create({
   itemContainer: {
     marginBottom: 20,
     borderWidth: 1,
-    borderColor: "black", // Set border color to black
+    borderColor: "black",
     borderRadius: 8,
-    backgroundColor: "white", // Add background color
+    backgroundColor: "white",
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -74,4 +85,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Laundry;
+export default LaundriesList;

@@ -1,14 +1,20 @@
-// screens/Home.js
 import React from "react";
 import { View, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-import { laundries } from "../data/laundriesData"; // Update the path as needed
+import { laundries } from "../data/laundriesData";
 import LaundriesList from "../components/LaundriesList";
 
 const Home = () => {
+  const navigation = useNavigation();
+
+  const handleLaundryPress = (id, laundry) => {
+    navigation.navigate("LaundryDetails", { id, laundry });
+  };
+
   return (
     <View style={styles.container}>
-      <LaundriesList data={laundries} />
+      <LaundriesList data={laundries} onPress={handleLaundryPress} />
     </View>
   );
 };
