@@ -8,32 +8,39 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL } from "../api";
 
 const LaundriesList = ({ data }) => {
   const navigation = useNavigation();
 
   const handleLaundryPress = (id) => {
-    navigation.navigate("LaundryDetails", { id });
+    navigation.navigate("LaundryDetails", { id: id });
   };
-
   return (
     <ScrollView style={styles.container}>
-      {data.map((item) => (
-        <TouchableOpacity
-          key={item.id}
-          style={styles.itemContainer}
-          onPress={() => handleLaundryPress(item.id)}
-        >
-          <View style={styles.item}>
-            <Image source={{ uri: item.image }} style={styles.image} />
-            <View style={styles.detailsContainer}>
-              <Text style={styles.name}>{item.name}</Text>
-              <Text style={styles.location}>{item.location}</Text>
-              <Text style={styles.review}>Review: {item.review}</Text>
+      {data.map((item) => {
+        console.log(BASE_URL + "/" + item.image);
+
+        return (
+          <TouchableOpacity
+            key={item.id}
+            style={styles.itemContainer}
+            onPress={() => handleLaundryPress(item._id)}
+          >
+            <View style={styles.item}>
+              <Image
+                source={{ uri: BASE_URL + item.image }}
+                style={styles.image}
+              />
+              <View style={styles.detailsContainer}>
+                <Text style={styles.name}>{item.name}</Text>
+                <Text style={styles.location}>{item.location}</Text>
+                <Text style={styles.review}>Review: {item.review}</Text>
+              </View>
             </View>
-          </View>
-        </TouchableOpacity>
-      ))}
+          </TouchableOpacity>
+        );
+      })}
     </ScrollView>
   );
 };
