@@ -46,12 +46,12 @@ const signOut = async () => {
 };
 
 const getAllLaundries = async () => {
-  const res = await instance.get("");
+  const res = await instance.get("/laundry");
   return res.data;
 };
 
 const getLaundryById = async (LaundryId) => {
-  const res = await instance.get(`.../.../${LaundryId}`);
+  const res = await instance.get(`laundry/${LaundryId}`);
   return res.data;
 };
 
