@@ -10,11 +10,11 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../api";
 
-const LaundriesList = ({ data }) => {
+const ItemsList = ({ data }) => {
   const navigation = useNavigation();
 
-  const handleLaundryPress = (id) => {
-    navigation.navigate("LaundryDetails", { id: id });
+  const handleItemPress = (id) => {
+    navigation.navigate("ItemsList", { id: id });
   };
   return (
     <ScrollView style={styles.container}>
@@ -25,7 +25,7 @@ const LaundriesList = ({ data }) => {
           <TouchableOpacity
             key={item.id}
             style={styles.itemContainer}
-            onPress={() => handleLaundryPress(item._id)}
+            onPress={() => handleItemPress(item._id)}
           >
             <View style={styles.item}>
               <Image
@@ -35,7 +35,6 @@ const LaundriesList = ({ data }) => {
               <View style={styles.detailsContainer}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.location}>{item.location}</Text>
-                <Text style={styles.review}>Review: {item.review}</Text>
               </View>
             </View>
           </TouchableOpacity>
@@ -92,4 +91,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LaundriesList;
+export default ItemsList;

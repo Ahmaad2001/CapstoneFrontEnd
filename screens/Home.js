@@ -3,6 +3,8 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import { SearchBar } from "react-native-elements";
 import { laundries } from "../data/laundriesData";
 import LaundriesList from "../components/LaundriesList";
+import { useQuery } from "@tanstack/react-query";
+import { getAllLaundries } from "../api/laundries";
 
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
