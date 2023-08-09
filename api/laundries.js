@@ -50,6 +50,10 @@ const getAllLaundries = async () => {
   return res.data;
 };
 
+const getAllServices = async () => {
+  const res = await instance.get("/service");
+  return res.data;
+};
 const getLaundryById = async (LaundryId) => {
   const res = await instance.get(`laundry/${LaundryId}`);
   return res.data;
@@ -64,4 +68,5 @@ export {
   signOut,
   getAllLaundries,
   getLaundryById,
+  getAllServices,
 };
