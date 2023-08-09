@@ -13,6 +13,7 @@ const Orders = () => {
     queryKey: ["services"],
     queryFn: () => getAllServices(),
   });
+
   const handleItemPress = (id, services) => {
     navigation.navigate("services", { id, services });
   };

@@ -6,6 +6,7 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../api";
@@ -16,6 +17,12 @@ const ItemsList = ({ data }) => {
   const handleItemPress = (id) => {
     navigation.navigate("ItemsList", { id: id });
   };
+
+  const handleAddToBasket = (id) => {
+    // Implement the logic to add the item to the basket
+    console.log(`Item ${id} added to basket`);
+  };
+
   return (
     <ScrollView style={styles.container}>
       {data.map((item) => {
@@ -36,6 +43,10 @@ const ItemsList = ({ data }) => {
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.location}>{item.location}</Text>
               </View>
+              <Button
+                title="Add to Basket"
+                onPress={() => handleAddToBasket(item._id)}
+              />
             </View>
           </TouchableOpacity>
         );
