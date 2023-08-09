@@ -4,6 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
 import Orders from "../screens/Orders";
+import Checkout from "../screens/Checkout";
 
 const Tab = createBottomTabNavigator();
 
