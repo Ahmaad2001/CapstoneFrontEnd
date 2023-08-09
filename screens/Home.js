@@ -1,15 +1,25 @@
+import { useNavigation } from "@react-navigation/native";
+// import { laundries } from "../data/laundriesData";
 import React, { useState } from "react";
 import { View, StyleSheet, ScrollView } from "react-native";
 import { SearchBar } from "react-native-elements";
-import { laundries } from "../data/laundriesData";
 import LaundriesList from "../components/LaundriesList";
 import { useQuery } from "@tanstack/react-query";
 import { getAllLaundries } from "../api/laundries";
 
 const Home = () => {
+  const navigation = useNavigation();
+  const { data: laundries } = useQuery({
+    queryKey: ["laundries"],
+    queryFn: () => getAllLaundries(),
+  });
+  const handleLaundryPress = (id, laundry) => {
+    navigation.navigate("LaundryDetails", { id, laundry });
+  };
+
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
-  const filteredLaundries = laundries.filter((laundry) => {
+  const filteredLaundries = laundries?.filter((laundry) => {
     const nameMatch =
       laundry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       searchTerm === "";
@@ -19,6 +29,7 @@ const Home = () => {
     return nameMatch && locationMatch;
   });
 
+  if (!laundries) return null;
   return (
     <ScrollView style={styles.container}>
       <View style={styles.searchBarContainer}>
@@ -47,8 +58,8 @@ const Home = () => {
 
       <View style={styles.spacer} />
 
-      <View style={styles.listContainer}>
-        <LaundriesList data={filteredLaundries} />
+      <View style={styles.container}>
+        <LaundriesList data={filteredLaundries} onPress={handleLaundryPress} />
       </View>
     </ScrollView>
   );
