@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   View,
@@ -8,6 +9,7 @@ import {
   ScrollView,
 } from "react-native";
 import { CheckBox } from "react-native-elements"; // Import CheckBox from react-native-elements
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const Services = () => {
   const [services, setServices] = useState({
@@ -29,48 +31,50 @@ const Services = () => {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image source={require("../assets/cloth.png")} style={styles.image} />
+    <SafeAreaView>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Image source={require("../assets/cloth.png")} style={styles.image} />
 
-      <View style={styles.checklistContainer}>
-        <Text style={styles.heading}>Select Services:</Text>
-        <CheckBox
-          title="Wash"
-          checked={services.wash}
-          onPress={() => handleServiceToggle("wash")}
-          containerStyle={styles.checkboxContainer}
-          textStyle={styles.checkboxText}
-        />
-        <CheckBox
-          title="Dry Clean"
-          checked={services.dryClean}
-          onPress={() => handleServiceToggle("dryClean")}
-          containerStyle={styles.checkboxContainer}
-          textStyle={styles.checkboxText}
-        />
-        <CheckBox
-          title="Iron"
-          checked={services.iron}
-          onPress={() => handleServiceToggle("iron")}
-          containerStyle={styles.checkboxContainer}
-          textStyle={styles.checkboxText}
-        />
-      </View>
+        <View style={styles.checklistContainer}>
+          <Text style={styles.heading}>Select Services:</Text>
+          <CheckBox
+            title="Wash"
+            checked={services.wash}
+            onPress={() => handleServiceToggle("wash")}
+            containerStyle={styles.checkboxContainer}
+            textStyle={styles.checkboxText}
+          />
+          <CheckBox
+            title="Dry Clean"
+            checked={services.dryClean}
+            onPress={() => handleServiceToggle("dryClean")}
+            containerStyle={styles.checkboxContainer}
+            textStyle={styles.checkboxText}
+          />
+          <CheckBox
+            title="Iron"
+            checked={services.iron}
+            onPress={() => handleServiceToggle("iron")}
+            containerStyle={styles.checkboxContainer}
+            textStyle={styles.checkboxText}
+          />
+        </View>
 
-      <TouchableOpacity
-        style={[
-          styles.addButton,
-          {
-            opacity:
-              services.wash || services.dryClean || services.iron ? 1 : 0.5,
-          },
-        ]}
-        onPress={handleAddToBasket}
-        disabled={!services.wash && !services.dryClean && !services.iron}
-      >
-        <Text style={styles.addButtonText}>Add to Basket</Text>
-      </TouchableOpacity>
-    </ScrollView>
+        <TouchableOpacity
+          style={[
+            styles.addButton,
+            {
+              opacity:
+                services.wash || services.dryClean || services.iron ? 1 : 0.5,
+            },
+          ]}
+          onPress={handleAddToBasket}
+          disabled={!services.wash && !services.dryClean && !services.iron}
+        >
+          <Text style={styles.addButtonText}>Add to Basket</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

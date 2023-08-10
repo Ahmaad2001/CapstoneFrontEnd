@@ -19,7 +19,7 @@ const LaundriesList = ({ data }) => {
   return (
     <ScrollView style={styles.container}>
       {data.map((item) => {
-        console.log(BASE_URL + "/" + item.image);
+        console.log("IMG: ", BASE_URL + "" + item.image);
 
         return (
           <TouchableOpacity

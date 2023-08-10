@@ -6,6 +6,7 @@ import LaundryDetails from "./screens/Laundrydetails";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Checkout from "./screens/Checkout";
 import { Text, View } from "react-native";
+import Services from "./screens/Services";
 
 const Stack = createStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
           <Stack.Screen name="Main" component={AppNavigation} />
           <Stack.Screen name="LaundryDetails" component={LaundryDetails} />
           <Stack.Screen name="Checkout" component={Checkout} />
+          <Stack.Screen name="Services" component={Services} />
         </Stack.Navigator>
       </QueryClientProvider>
     </NavigationContainer>

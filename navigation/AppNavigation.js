@@ -5,6 +5,7 @@ import Home from "../screens/Home";
 import Profile from "../screens/Profile";
 import Orders from "../screens/Orders";
 import Checkout from "../screens/Checkout";
+import { OrderNavigation } from "./OrderNavigation";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,7 +42,7 @@ export default function AppNavigation() {
       }}
     >
       <Tab.Screen name="Home" component={Home} />
-      <Tab.Screen name="Orders" component={Orders} />
+      <Tab.Screen name="Orders" component={OrderNavigation} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
   );
