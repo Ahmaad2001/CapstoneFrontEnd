@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import { LinearGradient } from "expo-linear-gradient"; // Import the LinearGradient component
+import { LinearGradient } from "expo-linear-gradient";
+import UserContext from "../context/UserContext";
+import { useNavigation } from "@react-navigation/native";
 
 export default Profile = () => {
+  const navigation = useNavigation();
+  const { user } = useContext(UserContext);
+
+  if (!user) {
+    navigation.navigate("Signin");
+    return null;
+  }
+
   return (
     <View style={styles.container}>
-      {/* Use LinearGradient for the header background */}
       <LinearGradient colors={["#2980b9", "#6dd5fa"]} style={styles.header}>
         <Image
           style={styles.avatar}
@@ -17,7 +26,7 @@ export default Profile = () => {
       <View style={styles.body}>
         <View style={styles.bodyContent}>
           <TouchableOpacity style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Favortie Laundries</Text>
+            <Text style={styles.buttonText}>Favorite Laundries</Text>
           </TouchableOpacity>
           <TouchableOpacity style={styles.buttonContainer}>
             <Text style={styles.buttonText}>My Locations</Text>
