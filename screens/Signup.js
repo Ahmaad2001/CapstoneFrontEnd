@@ -10,61 +10,25 @@ import {
   ScrollView,
   ImageBackground,
 } from "react-native";
-import * as ImagePicker from "expo-image-picker";
+
 import { signup, storeToken } from "../api/laundries";
 import { useNavigation } from "@react-navigation/native";
-// import UserContext from "../context/UserContext";
+import UserContext from "../context/UserContext";
 
 const Signup = () => {
   const navigation = useNavigation();
-  const [profileImage, setProfileImage] = useState(null);
+
   const [userInfo, setUserInfo] = useState({});
-  // const { setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const { mutate: signupFunction, error } = useMutation({
-    mutationFn: () => signup({ ...userInfo, profileImage }),
+    mutationFn: () => signup({ ...userInfo }),
     onSuccess: (data) => {
       storeToken(data.token);
       setUser(true);
       navigation.navigate("Home");
     },
   });
-
-  useEffect(() => {
-    // Request permission to access the device's gallery
-    (async () => {
-      const { status } =
-        await ImagePicker.requestMediaLibraryPermissionsAsync();
-      if (status !== "granted") {
-        alert("Sorry, we need camera roll permissions to make this work!");
-      }
-    })();
-  }, []);
-
-  const handleImageUpload = async () => {
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [1, 1],
-        quality: 1,
-      });
-
-      if (!result.canceled) {
-        setProfileImage(result.uri);
-      }
-    } catch (error) {
-      console.log("Error while picking image:", error);
-    }
-  };
-
-  //   const handleRegister = () => {
-  //     // Implement your register logic here
-  //     // For example, you can send the data to your backend server
-  //     // and handle the registration process.
-  //     // After successful registration, you can navigate to the home screen or login screen.
-  //     // navigation.navigate("Home");
-  //   };
 
   return (
     <ImageBackground
@@ -75,23 +39,6 @@ const Signup = () => {
         contentContainerStyle={styles.container}
         keyboardShouldPersistTaps="handled"
       >
-        <View style={styles.imageContainer}>
-          {profileImage ? (
-            <Image source={{ uri: profileImage }} style={styles.profileImage} />
-          ) : (
-            <Text style={styles.profileImagePlaceholder}>
-              Add Profile Image
-            </Text>
-          )}
-        </View>
-
-        <TouchableOpacity
-          style={styles.uploadButton}
-          onPress={handleImageUpload}
-        >
-          <Text style={styles.uploadButtonText}>Upload Image</Text>
-        </TouchableOpacity>
-
         <TextInput
           style={styles.input}
           placeholder="Username"

@@ -3,12 +3,12 @@ import jwt_decode from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
 
 const signup = async (userInfo) => {
-  const res = await instance.post("", userInfo);
+  const res = await instance.post("/user/signup", userInfo);
   return res.data;
 };
 
 const signin = async (userInfo) => {
-  const res = await instance.post("", userInfo);
+  const res = await instance.post("/user/signin", userInfo);
   return res.data;
 };
 
