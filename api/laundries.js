@@ -2,13 +2,13 @@ import instance from ".";
 import jwt_decode from "jwt-decode";
 import * as SecureStore from "expo-secure-store";
 
-const signUp = async (userInfo) => {
-  const res = await instance.post("", userInfo);
+const signup = async (userInfo) => {
+  const res = await instance.post("user/signup", userInfo);
   return res.data;
 };
 
-const signIn = async (userInfo) => {
-  const res = await instance.post("", userInfo);
+const signin = async (userInfo) => {
+  const res = await instance.post("user/signin", userInfo);
   return res.data;
 };
 
@@ -41,7 +41,7 @@ const getToken = async () => {
   }
 };
 
-const signOut = async () => {
+const signout = async () => {
   await SecureStore.deleteItemAsync("token");
 };
 
@@ -56,12 +56,12 @@ const getLaundryById = async (LaundryId) => {
 };
 
 export {
-  signUp,
-  signIn,
+  signup,
+  signin,
   storeToken,
   checkToken,
   getToken,
-  signOut,
+  signout,
   getAllLaundries,
   getLaundryById,
 };
