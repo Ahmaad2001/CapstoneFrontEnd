@@ -13,8 +13,8 @@ import { BASE_URL } from "../api";
 const ItemsList = ({ data }) => {
   const navigation = useNavigation();
 
-  const handleItemPress = (id) => {
-    navigation.navigate("Services", { id: id });
+  const handleItemPress = (selectedItem) => {
+    navigation.navigate("Services", { selectedItem });
   };
 
   let currentCategory = null;
@@ -39,7 +39,7 @@ const ItemsList = ({ data }) => {
                   <TouchableOpacity
                     key={filteredItem.id}
                     style={styles.itemContainer}
-                    onPress={() => handleItemPress(filteredItem._id)}
+                    onPress={() => handleItemPress(filteredItem)}
                   >
                     <View style={styles.item}>
                       <View style={styles.detailsContainer}>
