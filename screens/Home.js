@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-// import { laundries } from "../data/laundriesData";
 import React, { useState } from "react";
-import { View, StyleSheet, ScrollView } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Image,
+  Text,
+} from "react-native";
 import { SearchBar } from "react-native-elements";
 import LaundriesList from "../components/LaundriesList";
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +21,12 @@ const Home = () => {
   });
   const handleLaundryPress = (id, laundry) => {
     navigation.navigate("LaundryDetails", { id, laundry });
+  };
+
+  const handleCreateBasket = () => {
+    // Handle creating the basket here
+    // For now, let's log a message
+    console.log("Creating basket...");
   };
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -54,6 +66,22 @@ const Home = () => {
           containerStyle={styles.searchBarMainContainer}
           placeholderTextColor="#A0A0A0"
         />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <View style={styles.basketContainer}>
+          <Image
+            source={require("../assets/basket.png")}
+            style={styles.basketImage}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={styles.createBasketButton}
+          onPress={handleCreateBasket}
+        >
+          <Text style={styles.createBasketText}>Create My Basket</Text>
+        </TouchableOpacity>
       </View>
 
       <View style={styles.spacer} />
@@ -96,10 +124,40 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   spacer: {
-    height: "20%",
+    height: "0%",
   },
   listContainer: {
     flex: 1,
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    marginHorizontal: 11,
+    marginVertical: 10,
+  },
+  basketContainer: {
+    alignItems: "center", // Align the basketImage to center
+    marginLeft: 130,
+  },
+  createBasketButton: {
+    backgroundColor: "black",
+    borderRadius: 8,
+    borderWidth: 0,
+    borderColor: "#333",
+    paddingVertical: 10,
+    paddingHorizontal: 4,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  createBasketText: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  basketImage: {
+    width: 50,
+    height: 50,
   },
 });
 

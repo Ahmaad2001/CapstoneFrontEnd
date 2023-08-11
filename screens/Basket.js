@@ -4,7 +4,7 @@ import React from "react";
 export default function Basket(data) {
   return (
     <View>
-      <Text>Basket</Text>
+      <Checkout />
     </View>
   );
 }
