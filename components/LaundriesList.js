@@ -16,10 +16,11 @@ const LaundriesList = ({ data }) => {
   const handleLaundryPress = (id) => {
     navigation.navigate("LaundryDetails", { id: id });
   };
+
   return (
     <ScrollView style={styles.container}>
       {data.map((item) => {
-        console.log(BASE_URL + "/" + item.image);
+        console.log("IMG: ", BASE_URL + "" + item.image);
 
         return (
           <TouchableOpacity
@@ -28,15 +29,15 @@ const LaundriesList = ({ data }) => {
             onPress={() => handleLaundryPress(item._id)}
           >
             <View style={styles.item}>
-              <Image
-                source={{ uri: BASE_URL + item.image }}
-                style={styles.image}
-              />
               <View style={styles.detailsContainer}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.location}>{item.location}</Text>
                 <Text style={styles.review}>Review: {item.review}</Text>
               </View>
+              <Image
+                source={{ uri: BASE_URL + item.image }}
+                style={styles.image}
+              />
             </View>
           </TouchableOpacity>
         );
@@ -65,28 +66,32 @@ const styles = StyleSheet.create({
   item: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "space-between", // Aligns items to the center and places image on the right
     padding: 10,
   },
   image: {
     width: 80,
     height: 80,
     borderRadius: 8,
-    marginRight: 10,
+    marginLeft: 10, // Adjusted to align the image on the right
   },
   detailsContainer: {
     flex: 1,
   },
   name: {
+    textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
   },
   location: {
+    textAlign: "center",
     fontSize: 14,
     color: "#6E6E6E",
     marginBottom: 3,
   },
   review: {
+    textAlign: "center",
     fontSize: 16,
     color: "#007AFF",
   },

@@ -83,18 +83,22 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
   name: {
+    textAlign: "center",
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
   },
   location: {
+    textAlign: "center",
     color: "#666",
     marginBottom: 8,
   },
   description: {
+    textAlign: "center",
     marginBottom: 20,
   },
   reviews: {
+    textAlign: "center",
     color: "green",
     fontWeight: "bold",
   },
@@ -105,7 +109,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: "40%",
+    height: "60%",
     borderRadius: 8,
     marginRight: 10,
   },

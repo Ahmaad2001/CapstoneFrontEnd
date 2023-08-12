@@ -6,7 +6,6 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
-  Button,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../api";
@@ -14,42 +13,48 @@ import { BASE_URL } from "../api";
 const ItemsList = ({ data }) => {
   const navigation = useNavigation();
 
-  const handleItemPress = (id) => {
-    navigation.navigate("ItemsList", { id: id });
+  const handleItemPress = (selectedItem) => {
+    navigation.navigate("Services", { selectedItem });
   };
 
-  const handleAddToBasket = (id) => {
-    // Implement the logic to add the item to the basket
-    console.log(`Item ${id} added to basket`);
-  };
+  let currentCategory = null;
+  const displayedCategories = [];
 
   return (
     <ScrollView style={styles.container}>
-      {data.map((item) => {
-        console.log(BASE_URL + "/" + item.image);
+      {data?.map((item) => {
+        if (!displayedCategories.includes(item.categoryName)) {
+          displayedCategories.push(item.categoryName);
+          currentCategory = item.categoryName;
 
-        return (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.itemContainer}
-            onPress={() => handleItemPress(item._id)}
-          >
-            <View style={styles.item}>
-              <Image
-                source={{ uri: BASE_URL + item.image }}
-                style={styles.image}
-              />
-              <View style={styles.detailsContainer}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.location}>{item.location}</Text>
-              </View>
-              <Button
-                title="Add to Basket"
-                onPress={() => handleAddToBasket(item._id)}
-              />
+          return (
+            <View key={currentCategory} style={styles.categoryContainer}>
+              <Text style={styles.categoryName}>{currentCategory}</Text>
+              {data
+                .filter(
+                  (filteredItem) =>
+                    filteredItem.categoryName === currentCategory
+                )
+                .map((filteredItem) => (
+                  <TouchableOpacity
+                    key={filteredItem.id}
+                    style={styles.itemContainer}
+                    onPress={() => handleItemPress(filteredItem)}
+                  >
+                    <View style={styles.item}>
+                      <View style={styles.detailsContainer}>
+                        <Text style={styles.name}>{filteredItem.name}</Text>
+                      </View>
+                      <Image
+                        source={{ uri: BASE_URL + filteredItem.serviceImage }}
+                        style={styles.image}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                ))}
             </View>
-          </TouchableOpacity>
-        );
+          );
+        }
       })}
     </ScrollView>
   );
@@ -60,8 +65,18 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
   },
+  categoryContainer: {
+    marginVertical: 10,
+    paddingHorizontal: 10,
+  },
+  categoryName: {
+    textAlign: "right",
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#6E6E6E",
+    marginBottom: 5,
+  },
   itemContainer: {
-    marginBottom: 20,
     borderWidth: 1,
     borderColor: "black",
     borderRadius: 8,
@@ -71,6 +86,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
+    marginBottom: 10,
   },
   item: {
     flexDirection: "row",
@@ -87,18 +103,10 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   name: {
+    textAlign: "center",
     fontSize: 18,
     fontWeight: "bold",
     marginBottom: 5,
-  },
-  location: {
-    fontSize: 14,
-    color: "#6E6E6E",
-    marginBottom: 3,
-  },
-  review: {
-    fontSize: 16,
-    color: "#007AFF",
   },
 });
 

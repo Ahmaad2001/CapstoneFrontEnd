@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 // import { laundries } from "../data/laundriesData";
@@ -13,7 +13,6 @@ const Orders = () => {
     queryKey: ["services"],
     queryFn: () => getAllServices(),
   });
-
   const handleItemPress = (id, services) => {
     navigation.navigate("services", { id, services });
   };
