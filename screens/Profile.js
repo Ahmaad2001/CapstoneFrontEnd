@@ -15,14 +15,6 @@ export default Profile = () => {
 
   return (
     <View style={styles.container}>
-      <LinearGradient colors={["#2980b9", "#6dd5fa"]} style={styles.header}>
-        <Image
-          style={styles.avatar}
-          source={{
-            uri: "https://bootdey.com/img/Content/avatar/avatar6.png",
-          }}
-        />
-      </LinearGradient>
       <View style={styles.body}>
         <View style={styles.bodyContent}>
           <TouchableOpacity style={styles.buttonContainer}>
