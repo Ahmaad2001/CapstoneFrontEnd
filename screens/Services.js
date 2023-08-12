@@ -465,6 +465,11 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: "bold",
+    marginBottom: 15,
+  },
+  serviceItem: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 10,
     textAlign: "center",
   },
@@ -505,6 +510,22 @@ const styles = StyleSheet.create({
   },
   serviceButtonText: {
     color: "#007AFF",
+    fontWeight: "bold",
+    fontSize: 18,
+  },
+  backButton: {
+    position: "absolute",
+    bottom: 20,
+    left: 20,
+    flexDirection: "row",
+    alignItems: "center",
+    padding: 10,
+    backgroundColor: "#007AFF",
+    borderRadius: 5,
+    elevation: 2,
+  },
+  backButtonText: {
+    color: "white",
     fontWeight: "bold",
     fontSize: 16,
     textAlign: "center",
