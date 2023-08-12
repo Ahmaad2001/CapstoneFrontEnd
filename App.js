@@ -11,6 +11,7 @@ import UserContext from "./context/UserContext";
 
 import Checkout from "./screens/Checkout";
 import { Text, View } from "react-native";
+import Services from "./screens/Services";
 
 
 const Stack = createStackNavigator();
@@ -39,6 +40,7 @@ export default function App() {
             <Stack.Screen name="Signup" component={Signup} />
             <Stack.Screen name="Signin" component={Signin} />
           <Stack.Screen name="Checkout" component={Checkout} />
+          <Stack.Screen name="Services" component={Services} />
         </Stack.Navigator>
        </UserContext.Provider>
 
