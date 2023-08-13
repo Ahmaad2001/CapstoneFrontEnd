@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -6,9 +6,15 @@ import {
   Image,
   StyleSheet,
   TouchableOpacity,
+  SafeAreaView,
+  StatusBar,
+  FlatList,
+  TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../api";
+import { Colors, Fonts, Sizes } from "../constants/styles";
+import { MaterialIcons, Feather } from "@expo/vector-icons";
 
 const LaundriesList = ({ data }) => {
   const navigation = useNavigation();
@@ -17,32 +23,110 @@ const LaundriesList = ({ data }) => {
     navigation.navigate("LaundryDetails", { id: id });
   };
 
-  return (
-    <ScrollView style={styles.container}>
-      {data.map((item) => {
-        console.log("IMG: ", BASE_URL + "" + item.image);
-
-        return (
-          <TouchableOpacity
-            key={item.id}
-            style={styles.itemContainer}
-            onPress={() => handleLaundryPress(item._id)}
+  const renderItem = ({ laundry }) => (
+    <TouchableOpacity
+      activeOpacity={0.9}
+      onPress={() =>
+        navigation.push("LaundryStoreDetail", { laundry: laundry })
+      }
+      style={styles.nearByLaundryWrapStyle}
+    >
+      <Image
+        source={laundry.image}
+        style={{
+          width: 90.0,
+          height: 90.0,
+          borderRadius: Sizes.fixPadding - 5.0,
+        }}
+      />
+      <View style={{ flex: 1, marginLeft: Sizes.fixPadding + 5.0 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignlaundrys: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Text
+            numberOfLines={1}
+            style={{ lineHeight: 17.0, flex: 1, ...Fonts.blackColor15Medium }}
           >
-            <View style={styles.item}>
-              <View style={styles.detailsContainer}>
-                <Text style={styles.name}>{item.name}</Text>
-                <Text style={styles.location}>{item.location}</Text>
-                <Text style={styles.review}>Review: {item.review}</Text>
-              </View>
-              <Image
-                source={{ uri: BASE_URL + item.image }}
-                style={styles.image}
-              />
-            </View>
-          </TouchableOpacity>
-        );
-      })}
-    </ScrollView>
+            {laundry.name}
+          </Text>
+          <View
+            style={{
+              marginLeft: Sizes.fixPadding - 5.0,
+              flexDirection: "row",
+              alignlaundrys: "center",
+            }}
+          >
+            <MaterialIcons
+              name="star"
+              color={Colors.yellowColor}
+              size={16}
+              style={{
+                marginTop: Sizes.fixPadding - 13.0,
+                marginRight: Sizes.fixPadding - 5.0,
+              }}
+            />
+            {/* <Text style={{ ...Fonts.blackColor13Medium }}>
+              {laundry.rating.toFixed(2)}
+            </Text> */}
+          </View>
+        </View>
+        <View style={styles.laundryLocationInfoWrapStyle}>
+          <MaterialIcons
+            name="location-pin"
+            color={Colors.grayColor}
+            size={16}
+            style={{
+              marginTop: Sizes.fixPadding - 11.0,
+              marginRight: Sizes.fixPadding - 5.0,
+            }}
+          />
+          {/* <Text
+            numberOfLines={1}
+            style={{ flex: 1, ...Fonts.grayColor13Regular }}
+          >
+            {laundry.distance} | {laundry.location}
+          </Text> */}
+        </View>
+        <View style={{ flexDirection: "row", alignlaundrys: "center" }}>
+          <MaterialIcons
+            name="access-time"
+            color={Colors.grayColor}
+            size={15}
+            style={{
+              marginTop: Sizes.fixPadding - 13.0,
+              marginRight: Sizes.fixPadding - 5.0,
+            }}
+          />
+          {/* <Text style={{ flex: 1, ...Fonts.grayColor13Regular }}>
+            {laundry.openTime} to {laundry.closeTime}
+          </Text> */}
+        </View>
+      </View>
+    </TouchableOpacity>
+  );
+  return (
+    <FlatList
+      ListHeaderComponent={
+        <Text
+          style={{
+            marginBottom: Sizes.fixPadding * 2.0,
+            marginHorizontal: Sizes.fixPadding * 2.0,
+            ...Fonts.grayColor14Medium,
+          }}
+        >
+          {data.length} Stores Found
+        </Text>
+      }
+      data={data}
+      keyExtractor={(laundry) => `${laundry.id}`}
+      renderlaundry={renderItem}
+      contentContainerStyle={{ paddingBottom: Sizes.fixPadding }}
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
 
@@ -98,3 +182,161 @@ const styles = StyleSheet.create({
 });
 
 export default LaundriesList;
+
+// const SearchScreen = ({ navigation }) => {
+//   const [search, setSearch] = useState("");
+
+//   return (
+//     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
+//       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
+//       <View style={{ flex: 1 }}>
+//         {header()}
+//         {searchField()}
+//         {nearByLaundries()}
+//       </View>
+//     </SafeAreaView>
+//   );
+
+//   function nearByLaundries() {
+//     const renderItem = ({ item }) => (
+//       <TouchableOpacity
+//         activeOpacity={0.9}
+//         onPress={() => navigation.push("LaundryStoreDetail", { item: item })}
+//         style={styles.nearByLaundryWrapStyle}
+//       >
+//         <Image
+//           source={item.laundryImage}
+//           style={{
+//             width: 90.0,
+//             height: 90.0,
+//             borderRadius: Sizes.fixPadding - 5.0,
+//           }}
+//         />
+//         <View style={{ flex: 1, marginLeft: Sizes.fixPadding + 5.0 }}>
+//           <View
+//             style={{
+//               flexDirection: "row",
+//               alignItems: "center",
+//               justifyContent: "space-between",
+//             }}
+//           >
+//             <Text
+//               numberOfLines={1}
+//               style={{ lineHeight: 17.0, flex: 1, ...Fonts.blackColor15Medium }}
+//             >
+//               {item.laundryName}
+//             </Text>
+//             <View
+//               style={{
+//                 marginLeft: Sizes.fixPadding - 5.0,
+//                 flexDirection: "row",
+//                 alignItems: "center",
+//               }}
+//             >
+//               <MaterialIcons
+//                 name="star"
+//                 color={Colors.yellowColor}
+//                 size={16}
+//                 style={{
+//                   marginTop: Sizes.fixPadding - 13.0,
+//                   marginRight: Sizes.fixPadding - 5.0,
+//                 }}
+//               />
+//               <Text style={{ ...Fonts.blackColor13Medium }}>
+//                 {item.rating.toFixed(2)}
+//               </Text>
+//             </View>
+//           </View>
+//           <View style={styles.laundryLocationInfoWrapStyle}>
+//             <MaterialIcons
+//               name="location-pin"
+//               color={Colors.grayColor}
+//               size={16}
+//               style={{
+//                 marginTop: Sizes.fixPadding - 11.0,
+//                 marginRight: Sizes.fixPadding - 5.0,
+//               }}
+//             />
+//             <Text
+//               numberOfLines={1}
+//               style={{ flex: 1, ...Fonts.grayColor13Regular }}
+//             >
+//               {item.distance} | {item.location}
+//             </Text>
+//           </View>
+//           <View style={{ flexDirection: "row", alignItems: "center" }}>
+//             <MaterialIcons
+//               name="access-time"
+//               color={Colors.grayColor}
+//               size={15}
+//               style={{
+//                 marginTop: Sizes.fixPadding - 13.0,
+//                 marginRight: Sizes.fixPadding - 5.0,
+//               }}
+//             />
+//             <Text style={{ flex: 1, ...Fonts.grayColor13Regular }}>
+//               {item.openTime} to {item.closeTime}
+//             </Text>
+//           </View>
+//         </View>
+//       </TouchableOpacity>
+//     );
+//     return (
+//       <FlatList
+//         ListHeaderComponent={
+//           <Text
+//             style={{
+//               marginBottom: Sizes.fixPadding * 2.0,
+//               marginHorizontal: Sizes.fixPadding * 2.0,
+//               ...Fonts.grayColor14Medium,
+//             }}
+//           >
+//             {nearByLaundriesList.length} Stores Found
+//           </Text>
+//         }
+//         data={nearByLaundriesList}
+//         keyExtractor={(item) => `${item.id}`}
+//         renderItem={renderItem}
+//         contentContainerStyle={{ paddingBottom: Sizes.fixPadding }}
+//         showsVerticalScrollIndicator={false}
+//       />
+//     );
+//   }
+
+// const styles = StyleSheet.create({
+//   headerWrapStyle: {
+//     padding: Sizes.fixPadding * 2.0,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     backgroundColor: Colors.whiteColor,
+//   },
+//   searchFieldWrapStyle: {
+//     backgroundColor: Colors.whiteColor,
+//     borderRadius: Sizes.fixPadding - 5.0,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     elevation: 2.0,
+//     margin: Sizes.fixPadding * 2.0,
+//     paddingVertical: Sizes.fixPadding + 5.0,
+//     paddingHorizontal: Sizes.fixPadding,
+//   },
+//   nearByLaundryWrapStyle: {
+//     backgroundColor: Colors.whiteColor,
+//     marginHorizontal: Sizes.fixPadding - 5.0,
+//     flexDirection: "row",
+//     alignItems: "center",
+//     padding: Sizes.fixPadding + 5.0,
+//     marginHorizontal: Sizes.fixPadding * 2.0,
+//     borderRadius: Sizes.fixPadding - 5.0,
+//     marginBottom: Sizes.fixPadding,
+//     elevation: 2.0,
+//   },
+//   laundryLocationInfoWrapStyle: {
+//     marginTop: Sizes.fixPadding - 8.0,
+//     marginBottom: Sizes.fixPadding - 5.0,
+//     flexDirection: "row",
+//     alignItems: "center",
+//   },
+// });
+
+// export default SearchScreen;

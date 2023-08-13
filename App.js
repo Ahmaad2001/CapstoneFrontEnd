@@ -12,7 +12,7 @@ import UserContext from "./context/UserContext";
 import Checkout from "./screens/Checkout";
 import { Text, View } from "react-native";
 import Services from "./screens/Services";
-
+import { getToken } from "./api/laundries";
 
 const Stack = createStackNavigator();
 
@@ -32,18 +32,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <QueryClientProvider client={new QueryClient()}>
-
         <UserContext.Provider value={{ user, setUser }}>
           <Stack.Navigator initialRouteName="Main" headerMode="none">
             <Stack.Screen name="Main" component={AppNavigation} />
             <Stack.Screen name="LaundryDetails" component={LaundryDetails} />
             <Stack.Screen name="Signup" component={Signup} />
             <Stack.Screen name="Signin" component={Signin} />
-          <Stack.Screen name="Checkout" component={Checkout} />
-          <Stack.Screen name="Services" component={Services} />
-        </Stack.Navigator>
-       </UserContext.Provider>
-
+            <Stack.Screen name="Checkout" component={Checkout} />
+            <Stack.Screen name="Services" component={Services} />
+          </Stack.Navigator>
+        </UserContext.Provider>
       </QueryClientProvider>
     </NavigationContainer>
   );
