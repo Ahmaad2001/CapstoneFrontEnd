@@ -10,15 +10,19 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Laundrydetails() {
   const navigation = useNavigation();
   const route = useRoute();
-  const { id } = route.params;
-  const { data: laundry } = useQuery({
-    queryKey: ["laundry"],
-    queryFn: () => getLaundryById(id),
-  });
+  const { laundryData } = route.params;
+  // const { data: laundry } = useQuery({
+  //   queryKey: ["laundry"],
+  //   queryFn: () => getLaundryById(id),
+  // });
 
-  if (!laundry) {
-    return <Text>details</Text>;
-  }
+  // if (!laundry) {
+  //   return (
+  //     <View style={styles.centeredContainer}>
+  //       <Text style={{ fontSize: 60 }}>No Details!</Text>
+  //     </View>
+  //   );
+  // }
 
   return (
     <View style={styles.centeredContainer}>
@@ -34,14 +38,14 @@ export default function Laundrydetails() {
       </View>
       <View style={styles.cardContainer}>
         <Image
-          source={{ uri: BASE_URL + laundry.image }}
+          source={{ uri: BASE_URL + laundryData.image }}
           style={styles.image}
         />
         <View style={styles.detailsContainer}>
-          <Text style={styles.name}>{laundry.name}</Text>
-          <Text style={styles.location}>{laundry.location}</Text>
-          <Text style={styles.description}>{laundry.description}</Text>
-          <Text style={styles.reviews}>{laundry.reviews}</Text>
+          <Text style={styles.name}>{laundryData.name}</Text>
+          <Text style={styles.location}>{laundryData.location}</Text>
+          <Text style={styles.description}>{laundryData.description}</Text>
+          <Text style={styles.reviews}>{laundryData.reviews}</Text>
         </View>
         <View style={styles.buttonContainer}>
           <Button
