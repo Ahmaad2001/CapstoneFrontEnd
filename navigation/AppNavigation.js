@@ -41,7 +41,13 @@ export default function AppNavigation() {
         },
       }}
     >
-      <Tab.Screen name="Home" component={Home} />
+      <Tab.Screen
+        name="Home"
+        component={Home}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Tab.Screen name="Orders" component={OrderNavigation} />
       <Tab.Screen name="Profile" component={Profile} />
     </Tab.Navigator>
