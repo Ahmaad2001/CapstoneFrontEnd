@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { useMutation } from "@tanstack/react-query";
 import {
   View,
@@ -6,11 +6,8 @@ import {
   TextInput,
   TouchableOpacity,
   StyleSheet,
-  Image,
-  ScrollView,
   ImageBackground,
 } from "react-native";
-
 import { signup, storeToken } from "../api/laundries";
 import { useNavigation } from "@react-navigation/native";
 import UserContext from "../context/UserContext";
@@ -35,10 +32,10 @@ const Signup = () => {
       source={require("../assets/background.jpg")}
       style={styles.backgroundImage}
     >
-      <ScrollView
-        contentContainerStyle={styles.container}
-        keyboardShouldPersistTaps="handled"
-      >
+      <View style={styles.container}>
+        <Text style={styles.logo}>Sign up</Text>
+
+        {/* Username Input */}
         <TextInput
           style={styles.input}
           placeholder="Username"
@@ -48,6 +45,7 @@ const Signup = () => {
           }}
         />
 
+        {/* Email Input */}
         <TextInput
           style={styles.input}
           placeholder="Email"
@@ -59,6 +57,7 @@ const Signup = () => {
           autoCapitalize="none"
         />
 
+        {/* Password Input */}
         <TextInput
           style={styles.input}
           placeholder="Password"
@@ -69,6 +68,7 @@ const Signup = () => {
           secureTextEntry
         />
 
+        {/* Register Button */}
         <TouchableOpacity
           style={styles.registerButton}
           onPress={() => {
@@ -78,50 +78,41 @@ const Signup = () => {
           <Text style={styles.registerButtonText}>Signup</Text>
         </TouchableOpacity>
 
+        {/* Login Link */}
         <TouchableOpacity
           style={styles.loginLink}
           onPress={() => navigation.navigate("Signin")}
         >
-          <Text style={styles.loginLinkText}>
-            Already have an account? Login
+          <Text style={styles.registerLink}>
+            Already have an account?
+            <Text style={styles.registerText}> Sign in here</Text>
           </Text>
         </TouchableOpacity>
-      </ScrollView>
+      </View>
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flexGrow: 1,
-    alignItems: "center",
+    flex: 1,
     justifyContent: "center",
+    alignItems: "center",
     padding: 16,
   },
   backgroundImage: {
     flex: 1,
     resizeMode: "cover",
-  },
-  imageContainer: {
-    width: 150,
-    height: 150,
-    borderRadius: 75,
-    backgroundColor: "#aaa",
     justifyContent: "center",
-    alignItems: "center",
-    marginBottom: 16,
   },
-
-  uploadButton: {
-    backgroundColor: "#4169E1",
-    paddingVertical: 12,
-    paddingHorizontal: 24,
-    borderRadius: 8,
-    marginBottom: 16,
+  logo: {
+    fontSize: 32,
+    fontWeight: "bold",
+    marginBottom: 32,
+    color: "#ffa500",
   },
-
   input: {
-    width: "100%",
+    width: "80%",
     height: 50,
     borderWidth: 1,
     borderColor: "#ccc",
@@ -131,12 +122,28 @@ const styles = StyleSheet.create({
     fontSize: 16,
     backgroundColor: "white",
   },
-  registerButton: {
-    backgroundColor: "#4169E1",
+  loginButton: {
+    marginTop: 10,
+    backgroundColor: "#ffa500",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    marginBottom: 16,
+  },
+  loginText: {
+    color: "white",
+    fontSize: 18,
+    fontWeight: "bold",
+    textAlign: "center",
+  },
+  registerLink: {
+    marginTop: 16,
+    color: "black",
+
+    fontSize: 16,
+  },
+  registerText: {
+    color: "#ffa500",
+    fontWeight: "bold",
   },
   registerButtonText: {
     color: "white",
@@ -144,13 +151,12 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  loginLink: {
-    marginTop: 16,
-  },
-  loginLinkText: {
-    color: "white",
-    backgroundColor: "black",
-    fontSize: 16,
+  registerButton: {
+    marginTop: 10,
+    backgroundColor: "#ffa500",
+    paddingVertical: 12,
+    paddingHorizontal: 24,
+    borderRadius: 8,
   },
 });
 

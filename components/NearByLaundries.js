@@ -14,8 +14,10 @@ import { Colors, Fonts, Sizes } from "../constants/styles";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { getAllLaundries } from "../api/laundries";
+import { useNavigation } from "@react-navigation/native";
 
-function NearByLaundries({ navigation }) {
+function NearByLaundries() {
+  const navigation = useNavigation();
   const { data: laundry } = useQuery({
     queryKey: ["laundry"],
     queryFn: () => getAllLaundries(),
@@ -23,7 +25,7 @@ function NearByLaundries({ navigation }) {
   const renderItem = ({ item }) => (
     <TouchableOpacity
       activeOpacity={0.9}
-      onPress={() => navigation.push("LaundryDetails", { item: item })}
+      onPress={() => navigation.navigate("LaundryDetails", { item: item })}
       style={styles.nearByLaundryWrapStyle}
     >
       <Image

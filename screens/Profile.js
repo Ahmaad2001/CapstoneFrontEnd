@@ -191,7 +191,7 @@ const ProfileScreen = () => {
     return (
       <View style={{ ...styles.profileInfoWrapStyle, ...styles.whiteBoxStyle }}>
         <Image
-          source={require("../assets/images/users/user1.png")}
+          source={require("../assets/images/users/user.png")}
           style={{ width: 60.0, height: 60.0, borderRadius: 30.0 }}
         />
         <View style={{ marginLeft: Sizes.fixPadding }}>
