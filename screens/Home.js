@@ -174,17 +174,23 @@ import {
   TouchableOpacity,
   StyleSheet,
   Text,
+  Button,
   ScrollView,
 } from "react-native";
 import { Colors, Fonts, Sizes } from "../constants/styles";
-import { MaterialIcons, Octicons, Feather } from "@expo/vector-icons";
+import {
+  MaterialIcons,
+  Octicons,
+  Feather,
+  MaterialCommunityIcons,
+} from "@expo/vector-icons";
 import { LinearGradient } from "expo-linear-gradient";
 import { Menu, MenuItem } from "react-native-material-menu";
 import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
 import { getAllLaundries } from "../api/laundries";
 import LaundriesList from "../components/LaundriesList";
-import { Button, SearchBar } from "react-native-elements";
+import { SearchBar } from "react-native-elements";
 import { TextInput } from "react-native-paper";
 
 const { width } = Dimensions.get("window");
@@ -225,8 +231,37 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 0.3 }}>{header()}</View>
-      <View style={{ flex: 0.3 }}>
-        <Button style={styles.createBasketButton} title="Create your basket" />
+      <View
+        style={{
+          flex: 0.15,
+          flexDirection: "row",
+          justifyContent: "center",
+          // alignItems: "center",
+        }}
+      >
+        <View
+          style={{
+            paddingHorizontal: 10,
+            borderColor: "black",
+            borderWidth: 1,
+            borderRadius: 12,
+            flexDirection: "row",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <Text
+            style={{
+              fontSize: 22,
+              marginRight: 5,
+            }}
+          >
+            Create your basket
+          </Text>
+          <MaterialCommunityIcons name="basket" size={22} />
+        </View>
+        {/* <Button title="Delivery" />
+        <Button title="Pick up" /> */}
       </View>
       <ScrollView style={{ flex: 0.6 }}>
         <View style={styles.container}>
@@ -243,7 +278,7 @@ const HomeScreen = () => {
 function header() {
   return (
     <LinearGradient
-      colors={[Colors.primaryColor, "#C9BEFE"]}
+      colors={["#356cc4", "#4287f5"]}
       style={{ padding: Sizes.fixPadding * 2.0 }}
     >
       <View

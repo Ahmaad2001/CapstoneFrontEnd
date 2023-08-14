@@ -136,37 +136,100 @@ import CollapsingToolbar from "../components/silverAppBarScreen";
 import MapView, { Marker } from "react-native-maps";
 import ItemsList2 from "../components/ItemsList2";
 import ItemsList from "../components/ItemsList";
+import { useQuery } from "@tanstack/react-query";
+import { getLaundryById } from "../api/laundries";
+import { BASE_URL } from "../api";
 
 const { width } = Dimensions.get("window");
 
 const reviewsList = [
-  {
-    id: "1",
-    userImage: require("../assets/images/users/user2.png"),
-    userName: "Jane Cooper",
-    rating: 4.2,
-    reviewDate: "20 March 2021",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
-  },
-  {
-    id: "2",
-    userImage: require("../assets/images/users/user3.png"),
-    userName: "Wade Warren",
-    rating: 4.3,
-    reviewDate: "18 March 2021",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
-  },
-  {
-    id: "3",
-    userImage: require("../assets/images/users/user4.png"),
-    userName: "Brooklyn Simmons",
-    rating: 4.0,
-    reviewDate: "15 March 2021",
-    review:
-      "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
-  },
+  [
+    {
+      id: "1",
+      userImage: require("../assets/images/users/user2.png"),
+      userName: "Jane Cooper",
+      rating: 4.2,
+      reviewDate: "20 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+    {
+      id: "2",
+      userImage: require("../assets/images/users/user3.png"),
+      userName: "Wade Warren",
+      rating: 4.3,
+      reviewDate: "18 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+    {
+      id: "3",
+      userImage: require("../assets/images/users/user4.png"),
+      userName: "Brooklyn Simmons",
+      rating: 4.0,
+      reviewDate: "15 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+  ],
+  [
+    {
+      id: "1",
+      userImage: require("../assets/images/users/user2.png"),
+      userName: "Jane fdsiojflisdjfkl",
+      rating: 4.2,
+      reviewDate: "20 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+    {
+      id: "2",
+      userImage: require("../assets/images/users/user3.png"),
+      userName: "Wade Warren",
+      rating: 4.3,
+      reviewDate: "18 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+    {
+      id: "3",
+      userImage: require("../assets/images/users/user4.png"),
+      userName: "Brooklyn Simmons",
+      rating: 4.0,
+      reviewDate: "15 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+  ],
+  [
+    {
+      id: "1",
+      userImage: require("../assets/images/users/user2.png"),
+      userName: "Jane Cooper",
+      rating: 4.2,
+      reviewDate: "20 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+    {
+      id: "2",
+      userImage: require("../assets/images/users/user3.png"),
+      userName: "Wade Warren",
+      rating: 4.3,
+      reviewDate: "18 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+    {
+      id: "3",
+      userImage: require("../assets/images/users/user4.png"),
+      userName: "Brooklyn Simmons",
+      rating: 4.0,
+      reviewDate: "15 March 2021",
+      review:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing sit sit Mauris habitant in donec in viverra pellentesquised felis sit orci, ipsum nulla integer ipsum.",
+    },
+  ],
 ];
 
 const servicesList = [
@@ -201,6 +264,12 @@ const Laundrydetails = ({ navigation, route }) => {
 
   const [selectedTabIndex, setSelectedTabIndex] = useState(0);
 
+  const { data } = useQuery({
+    queryKey: ["Laundry", item._id],
+    queryFn: () => getLaundryById(item._id),
+  });
+  if (!data) return null;
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
@@ -221,18 +290,14 @@ const Laundrydetails = ({ navigation, route }) => {
           toolbarColor={Colors.primaryColor}
           toolbarMinHeight={70}
           toolbarMaxHeight={220}
-          src={item.laundryImage}
-          element={<>{laundryInfo()}</>}
+          src={{ uri: BASE_URL + data.image }}
+          element={<>{laundryInfo({ data })}</>}
         >
           <View style={{ paddingBottom: Sizes.fixPadding * 2.0 }}>
-            {contactDetail()}
+            {contactDetail({ data })}
             {divider()}
             {tabBar()}
-            {selectedTabIndex == 0
-              ? aboutInfo()
-              : selectedTabIndex == 1
-              ? itemsInfo()
-              : selectedTabIndex == 2}
+            {selectedTabIndex == 0 ? aboutInfo({ data }) : itemsInfo()}
           </View>
         </CollapsingToolbar>
       </View>
@@ -291,18 +356,18 @@ const Laundrydetails = ({ navigation, route }) => {
     // );
   }
 
-  function aboutInfo() {
+  function aboutInfo({ data }) {
     return (
       <View>
-        {aboutDetail()}
-        {addressInfo()}
+        {aboutDetail({ data })}
+        {addressInfo({ data })}
         {openingHoursInfo()}
-        {reviewsInfo()}
+        {reviewsInfo(1)}
       </View>
     );
   }
 
-  function reviewsInfo() {
+  function reviewsInfo(number) {
     return (
       <View style={{ ...styles.whiteBoxStyle, ...styles.reviewsInfoWrapStyle }}>
         <Text
@@ -313,7 +378,7 @@ const Laundrydetails = ({ navigation, route }) => {
         >
           Reviews
         </Text>
-        {reviewsList.map((item, index) => (
+        {reviewsList[number].map((item, index) => (
           <View key={`${item.id}`}>
             <View style={{ flexDirection: "row", alignItems: "center" }}>
               <Image
@@ -437,7 +502,7 @@ const Laundrydetails = ({ navigation, route }) => {
     );
   }
 
-  function addressInfo() {
+  function addressInfo({ data }) {
     return (
       <View style={{ ...styles.whiteBoxStyle, ...styles.addressInfoWrapStyle }}>
         <View style={{ flex: 1, marginRight: Sizes.fixPadding * 5.0 }}>
@@ -449,7 +514,7 @@ const Laundrydetails = ({ navigation, route }) => {
               ...Fonts.grayColor13Regular,
             }}
           >
-            2464 Royal Ln. Mesa, New Jersey CA 941032
+            {data.location}
           </Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             <Feather
@@ -482,8 +547,8 @@ const Laundrydetails = ({ navigation, route }) => {
               borderRadius: Sizes.fixPadding - 5.0,
             }}
             initialRegion={{
-              latitude: 37.33233141,
-              longitude: -122.0312186,
+              longitude: 48.1239894,
+              latitude: 29.1070609,
               latitudeDelta: 0.1,
               longitudeDelta: 0.1,
             }}
@@ -502,7 +567,7 @@ const Laundrydetails = ({ navigation, route }) => {
     );
   }
 
-  function aboutDetail() {
+  function aboutDetail({ data }) {
     return (
       <View
         style={{
@@ -513,10 +578,10 @@ const Laundrydetails = ({ navigation, route }) => {
       >
         <Text style={{ ...Fonts.blackColor16SemiBold }}>About us</Text>
         <Text style={{ textAlign: "justify", ...Fonts.grayColor13Regular }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing ili elit. Volutpat
-          semper arcu, aliquam bibendum gravid gravida tristique. Scelerisque
-          pharetra urna id in cras nunc arcu.
+          {data.description}
         </Text>
+        <View style={{ height: 10 }}></View>
+        <Text> Call us: {data.number}</Text>
       </View>
     );
   }
@@ -563,7 +628,7 @@ const Laundrydetails = ({ navigation, route }) => {
     );
   }
 
-  function contactDetail() {
+  function contactDetail({ data }) {
     return (
       <View style={styles.contactDetailWrapStyle}>
         {contactOptionsSort({ iconName: "phone-in-talk", option: "Call" })}
@@ -596,16 +661,16 @@ const Laundrydetails = ({ navigation, route }) => {
     );
   }
 
-  function laundryInfo() {
+  function laundryInfo({ data, distance = "2 km away" }) {
+    console.log(data);
     return (
       <View style={styles.laundryInfoWrapStyle}>
         <View style={{ flex: 1 }}>
-          <Text style={{ ...Fonts.whiteColor17Medium }}>
-            Xpress Laundry Services
-          </Text>
-          <Text numberOfLines={2} style={{ ...Fonts.whiteColor14Regular }}>
-            Royal Ln. Mesa, New Jersey 45463
-          </Text>
+          <Text style={{ ...Fonts.whiteColor17Medium }}>{data.name}</Text>
+          <Text
+            numberOfLines={2}
+            style={{ ...Fonts.whiteColor14Regular }}
+          ></Text>
           <View style={{ flexDirection: "row", alignItems: "center" }}>
             {showRating({ number: Math.floor(5) })}
             <Text
@@ -630,7 +695,7 @@ const Laundrydetails = ({ navigation, route }) => {
               ...Fonts.whiteColor12SemiBold,
             }}
           >
-            2.0 km away
+            {distance}
           </Text>
           <View style={styles.openButtonStyle}>
             <Text style={{ ...Fonts.whiteColor13SemiBold }}>Open</Text>

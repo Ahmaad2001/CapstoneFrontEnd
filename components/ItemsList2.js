@@ -413,7 +413,8 @@ const otherProductsList = [
 ];
 
 const ItemsList2 = ({ navigation, route }) => {
-  const item = route.params.item;
+  // const item = route.params.item;
+  const item = "";
   const [menProducts, setMenProducts] = useState(menProductsList);
   const [womenProducts, setWomenProducts] = useState(womenProductsList);
   const [kidsProducts, setKidsProducts] = useState(kidsProductsList);

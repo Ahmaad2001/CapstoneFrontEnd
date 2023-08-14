@@ -99,7 +99,6 @@ const OrdersScreen = ({ navigation }) => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 1 }}>
-        {header()}
         <FlatList
           ListHeaderComponent={
             <>

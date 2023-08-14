@@ -15,6 +15,7 @@ import { MaterialIcons, Feather } from "@expo/vector-icons";
 import { useQuery } from "@tanstack/react-query";
 import { getAllLaundries } from "../api/laundries";
 import { useNavigation } from "@react-navigation/native";
+import { BASE_URL } from "../api";
 
 function NearByLaundries() {
   const navigation = useNavigation();
@@ -29,11 +30,13 @@ function NearByLaundries() {
       style={styles.nearByLaundryWrapStyle}
     >
       <Image
-        source={item.image}
         style={{
           width: 90.0,
           height: 90.0,
           borderRadius: Sizes.fixPadding - 5.0,
+        }}
+        source={{
+          uri: BASE_URL + item.image,
         }}
       />
       <View style={{ flex: 1, marginLeft: Sizes.fixPadding + 5.0 }}>
