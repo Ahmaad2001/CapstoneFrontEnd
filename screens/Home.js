@@ -255,7 +255,7 @@ function header() {
       >
         <View style={{ flex: 1, flexDirection: "row", alignItems: "center" }}>
           <Image
-            source={require("../assets/images/users/user1.png")}
+            source={require("../assets/images/users/user.png")}
             style={{ width: 40.0, height: 40.0, borderRadius: 20.0 }}
           />
           <View style={{ flex: 1, marginLeft: Sizes.fixPadding - 5.0 }}>

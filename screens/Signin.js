@@ -43,7 +43,7 @@ const Signin = () => {
     >
       <View style={styles.container}>
         {/* Logo */}
-        <Text style={styles.logo}>YourLogo</Text>
+        <Text style={styles.logo}>Sign in</Text>
 
         {/* Username Input */}
         <TextInput
@@ -85,7 +85,7 @@ const Signin = () => {
         >
           <Text style={styles.registerLink}>
             Don't have an account?
-            <Text style={styles.registerText}>Signup here</Text>
+            <Text style={styles.registerText}> Signup here</Text>
           </Text>
         </TouchableOpacity>
       </View>
@@ -137,8 +137,8 @@ const styles = StyleSheet.create({
   },
   registerLink: {
     marginTop: 16,
-    color: "white",
-    backgroundColor: "black",
+    color: "black",
+
     fontSize: 16,
   },
   registerText: {
