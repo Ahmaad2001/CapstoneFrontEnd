@@ -17,12 +17,12 @@ import { getAllLaundries } from "../api/laundries";
 import { useNavigation } from "@react-navigation/native";
 import { BASE_URL } from "../api";
 
-function NearByLaundries() {
+function NearByLaundries({ data: laundry }) {
   const navigation = useNavigation();
-  const { data: laundry } = useQuery({
-    queryKey: ["laundry"],
-    queryFn: () => getAllLaundries(),
-  });
+  // const { data: laundry } = useQuery({
+  //   queryKey: ["laundry"],
+  //   queryFn: () => getAllLaundries(),
+  // });
   const renderItem = ({ item }) => {
     console.log(BASE_URL + item.image);
 

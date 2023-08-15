@@ -159,8 +159,8 @@ const OrdersScreen = ({ navigation }) => {
           </View>
           <View style={{ alignItems: "flex-end" }}>
             <Text style={{ ...Fonts.blackColor16SemiBold }}>
-              {`$`}
               {item.amount.toFixed(2)}
+              {` KD`}
             </Text>
             <Text style={{ ...Fonts.primaryColor14Medium }}>Delivered</Text>
           </View>
@@ -258,8 +258,8 @@ const OrdersScreen = ({ navigation }) => {
           </View>
           <View style={{ alignItems: "flex-end" }}>
             <Text style={{ ...Fonts.blackColor16SemiBold }}>
-              {`$`}
               {(+item.amount).toFixed(2)}
+              {` KD`}
             </Text>
             <Text style={{ ...Fonts.primaryColor14Medium }}>
               {item.orderStatus}

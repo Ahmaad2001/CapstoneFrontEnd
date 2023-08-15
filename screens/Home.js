@@ -175,6 +175,7 @@ import {
   StyleSheet,
   Text,
   Button,
+  TextInput,
   ScrollView,
 } from "react-native";
 import { Colors, Fonts, Sizes } from "../constants/styles";
@@ -191,12 +192,12 @@ import { useQuery } from "@tanstack/react-query";
 import { getAllLaundries } from "../api/laundries";
 import LaundriesList from "../components/LaundriesList";
 import { SearchBar } from "react-native-elements";
-import { TextInput } from "react-native-paper";
 
 const { width } = Dimensions.get("window");
 
 const HomeScreen = () => {
   const navigation = useNavigation();
+  const [query, setQuery] = useState("");
   const { data: laundries } = useQuery({
     queryKey: ["laundries"],
     queryFn: () => getAllLaundries(),
@@ -213,16 +214,8 @@ const HomeScreen = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [locationFilter, setLocationFilter] = useState("");
-  const filteredLaundries = laundries?.filter((laundry) => {
-    const nameMatch = laundry.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    searchTerm === "";
-    const locationMatch = laundry.location
-      .toLowerCase()
-      .includes(locationFilter.toLowerCase());
-    locationFilter === "";
-    return nameMatch && locationMatch;
+  const filteredLaundries = laundries?.filter((item) => {
+    return item.name.toLowerCase().includes(query.toLowerCase());
   });
 
   if (!laundries) return null;
@@ -230,9 +223,45 @@ const HomeScreen = () => {
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
-      <View style={{ flex: 0.3 }}>{header()}</View>
+      <View style={{ flex: 0.23 }}>{header({ setQuery })}</View>
 
       <ScrollView style={{ flex: 0.7 }}>
+        <View
+          style={{
+            height: 70,
+            flex: 1,
+            justifyContent: "space-around",
+            alignItems: "center",
+            flexDirection: "row",
+          }}
+        >
+          <Text>Create your baskect</Text>
+          <View
+            style={{
+              borderWidth: 2,
+              borderColor: "black",
+              width: 200,
+              height: "70%",
+              borderRadius: 20,
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          >
+            <TouchableOpacity
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+              }}
+              onPress={() => {
+                navigation.navigate("ItemListPage");
+              }}
+            >
+              <Text>Baskect</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
         <View style={styles.container}>
           <LaundriesList
             data={filteredLaundries}
@@ -244,7 +273,7 @@ const HomeScreen = () => {
   );
 };
 
-function header() {
+function header({ setQuery }) {
   return (
     <LinearGradient
       colors={[Colors.primaryColor, "#C9BEFE"]}
@@ -270,12 +299,12 @@ function header() {
           </View>
         </View>
       </View>
-      {searchInfo()}
+      {searchInfo({ setQuery })}
     </LinearGradient>
   );
 }
 
-function searchInfo() {
+function searchInfo({ setQuery }) {
   const navigation = useNavigation();
   //   const [searchTerm, setSearchTerm] = useState("");
   //   const [locationFilter, setLocationFilter] = useState("");
@@ -304,9 +333,15 @@ function searchInfo() {
           marginTop: Sizes.fixPadding - 12.0,
         }}
       />
-      <Text style={{ ...Fonts.grayColor12Regular }}>
+      <TextInput
+        placeholder="Search Laundry Store by name"
+        onChangeText={(value) => {
+          setQuery(value);
+        }}
+      />
+      {/* <Text style={{ ...Fonts.grayColor12Regular }}>
         Search Laundry Store by name
-      </Text>
+      </Text> */}
     </TouchableOpacity>
   );
 }

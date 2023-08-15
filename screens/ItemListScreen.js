@@ -1,48 +1,48 @@
-import React, { useContext, useEffect, useState } from "react";
 import {
-  SafeAreaView,
   View,
-  StatusBar,
-  Image,
-  TouchableOpacity,
-  FlatList,
-  StyleSheet,
   Text,
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  FlatList,
 } from "react-native";
-import { Colors, Fonts, Sizes } from "../constants/styles";
-import { MaterialIcons, Octicons } from "@expo/vector-icons";
-import { TabView, TabBar } from "react-native-tab-view";
-import { BottomSheet } from "@rneui/themed";
+import React, { useContext, useEffect, useState } from "react";
+import ItemsList2 from "../components/ItemsList2";
 import BaskectContext from "../context/BascketContext";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import { Fonts, Sizes } from "../constants/styles";
+import { Octicons } from "@expo/vector-icons";
+import { BottomSheet } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 
-const washOptionsList = [
-  {
-    id: "1",
-    option: "Wash Only",
-    amount: 0.25,
-  },
-  {
-    id: "2",
-    option: "Iron Only",
-    amount: 0.25,
-  },
-  {
-    id: "3",
-    option: "Wash & Iron",
-    amount: 0.5,
-  },
-  {
-    id: "4",
-    option: "Dry Clean",
-    amount: 1.0,
-  },
-];
-
-const ItemsList2 = ({ data }) => {
-  // const item = route.params.item;
-  const navigation = useNavigation();
+export default function ItemListScreen() {
   const { baskect, setBaskect } = useContext(BaskectContext);
+
+  const navigation = useNavigation();
+  const washOptionsList = [
+    {
+      id: "1",
+      option: "Wash Only",
+      amount: 0.25,
+    },
+    {
+      id: "2",
+      option: "Iron Only",
+      amount: 0.25,
+    },
+    {
+      id: "3",
+      option: "Wash & Iron",
+      amount: 0.5,
+    },
+    {
+      id: "4",
+      option: "Dry Clean",
+      amount: 1.0,
+    },
+  ];
   const menProductsList = [
     {
       id: "1",
@@ -117,7 +117,6 @@ const ItemsList2 = ({ data }) => {
       totalCount: 0,
     },
   ];
-
   const [otherProducts, setOtherProducts] = useState(menProductsList);
 
   function updateProducts({
@@ -211,10 +210,10 @@ const ItemsList2 = ({ data }) => {
             <Text style={{ ...Fonts.blackColor16Medium }}>
               {item.productType}
             </Text>
-            <Text style={{ ...Fonts.grayColor14Medium }}>
+            {/* <Text style={{ ...Fonts.grayColor14Medium }}>
+              {`$`}
               {item.amount.toFixed(2)}
-              {` KD`}
-            </Text>
+            </Text> */}
           </View>
         </View>
         <View
@@ -437,40 +436,42 @@ const ItemsList2 = ({ data }) => {
     }
   };
 
-  function itemCountAndPriceAndAddCartButtonInfo() {
-    return (
-      <View style={styles.itemCountTotalPriceAndAddCartButtonWrapStyle}>
-        <View>
-          <Text style={{ ...Fonts.blackColor15Medium }}>
-            {/* {totalItemCount} */}
-            Items
-          </Text>
-          <Text style={{ ...Fonts.blackColor16SemiBold }}>
-            {otherProducts
-              .reduce((sum, i) => (sum += i.totalCount * i.amount), 0)
-              .toFixed(2)}
-          </Text>
-        </View>
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={() => navigation.navigate("Cart")}
-          style={styles.viewCartButtonStyle}
-        >
-          <Text style={{ ...Fonts.whiteColor17SemiBold }}>View Cart</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  }
-  console.log(baskect);
   useEffect(() => {
     setBaskect({
-      laundry: data,
+      laundry: {},
       cart: otherProducts.filter((product) => {
         return product.totalCount > 0;
       }),
     });
   }, [otherProducts]);
 
+  function itemCountAndPriceAndAddCartButtonInfo() {
+    return (
+      <View style={styles.itemCountTotalPriceAndAddCartButtonWrapStyle}>
+        {/* <View>
+          <Text style={{ ...Fonts.blackColor15Medium }}>Items</Text>
+          <Text style={{ ...Fonts.blackColor16SemiBold }}>
+            {otherProducts
+              .reduce((sum, i) => (sum += i.totalCount * i.amount), 0)
+              .toFixed(2)}
+          </Text>
+        </View> */}
+        <TouchableOpacity
+          activeOpacity={0.9}
+          onPress={() => navigation.navigate("ChooseLaundry")}
+          style={[
+            styles.viewCartButtonStyle,
+            {
+              backgroundColor: "#68619A",
+              opacity: baskect.cart.length > 0 ? 100 : 0,
+            },
+          ]}
+        >
+          <Text style={{ ...Fonts.whiteColor17SemiBold }}>View Laundries</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
@@ -483,288 +484,7 @@ const ItemsList2 = ({ data }) => {
       {itemCountAndPriceAndAddCartButtonInfo()}
     </SafeAreaView>
   );
-
-  function header() {
-    return (
-      <View style={styles.headerWrapStyle}>
-        <MaterialIcons
-          name="arrow-back"
-          color={Colors.blackColor}
-          size={22}
-          onPress={() => navigation.pop()}
-          style={{ marginTop: Sizes.fixPadding - 13.0 }}
-        />
-        <Text
-          style={{
-            marginLeft: Sizes.fixPadding + 5.0,
-            flex: 1,
-            ...Fonts.blackColor18SemiBold,
-          }}
-        >
-          {item.serviceName}
-        </Text>
-      </View>
-    );
-  }
-};
-
-const ProductsInfo = ({
-  productsList,
-  updateProducts,
-  category,
-  setProducts,
-  updateProductsCount,
-}) => {
-  const [state, setState] = useState({
-    showWashOptionsSheet: false,
-    selectedWashOption: null,
-    selectedProduct: null,
-    selectedOptionAmount: null,
-  });
-
-  const updateState = (data) => setState((state) => ({ ...state, ...data }));
-
-  const {
-    showWashOptionsSheet,
-    selectedWashOption,
-    selectedProduct,
-    selectedOptionAmount,
-  } = state;
-
-  const renderItem = ({ item }) => (
-    <View style={styles.productsWrapStyle}>
-      <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Image
-          source={item.productImage}
-          style={{ width: 50.0, height: 50.0, resizeMode: "contain" }}
-        />
-        <View style={{ marginLeft: Sizes.fixPadding }}>
-          <Text style={{ ...Fonts.blackColor16Medium }}>
-            {item.productType}
-          </Text>
-          <Text style={{ ...Fonts.grayColor14Medium }}>
-            {item.amount.toFixed(2)}
-            {` KD`}
-          </Text>
-        </View>
-      </View>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "flex-end",
-        }}
-      >
-        <TouchableOpacity
-          activeOpacity={0.9}
-          onPress={() => {
-            updateState({
-              selectedWashOption: item.washOption,
-              selectedProduct: item,
-              selectedOptionAmount: item.amount,
-              showWashOptionsSheet: true,
-            });
-          }}
-          style={{
-            ...styles.washOptionAndCountInfoWrapStyle,
-            paddingVertical: Sizes.fixPadding - 5.0,
-          }}
-        >
-          <Text style={{ ...Fonts.blackColor13Medium }}>{item.washOption}</Text>
-          <Octicons
-            name="chevron-down"
-            size={14}
-            color={Colors.primaryColor}
-            style={{ marginLeft: Sizes.fixPadding }}
-          />
-        </TouchableOpacity>
-        <View
-          style={{
-            ...styles.washOptionAndCountInfoWrapStyle,
-            paddingVertical: Sizes.fixPadding - 7.0,
-            marginLeft: Sizes.fixPadding + 5.0,
-          }}
-        >
-          <Text
-            onPress={() => {
-              updateProductsCount({
-                id: item.id,
-                type: "remove",
-                updatedList: productsList,
-                category: category,
-              });
-            }}
-            style={
-              item.totalCount == 0
-                ? { ...Fonts.mediumGrayColor16SemiBold }
-                : { ...Fonts.primaryColor16SemiBold }
-            }
-          >
-            -
-          </Text>
-          <Text
-            style={{
-              marginHorizontal: Sizes.fixPadding + 3.0,
-              ...(item.totalCount == 0
-                ? { ...Fonts.mediumGrayColor13SemiBold }
-                : { ...Fonts.blackColor13SemiBold }),
-            }}
-          >
-            {item.totalCount}
-          </Text>
-          <Text
-            onPress={() => {
-              updateProductsCount({
-                id: item.id,
-                type: "add",
-                updatedList: productsList,
-                category: category,
-              });
-            }}
-            style={{ ...Fonts.primaryColor16SemiBold }}
-          >
-            +
-          </Text>
-        </View>
-      </View>
-    </View>
-  );
-
-  return (
-    <View style={{ flex: 1 }}>
-      <FlatList
-        data={productsList}
-        keyExtractor={(item) => `${item.id}`}
-        renderItem={renderItem}
-        contentContainerStyle={{
-          paddingTop: Sizes.fixPadding * 2.0,
-          paddingBottom: Sizes.fixPadding * 8.0,
-        }}
-        showsVerticalScrollIndicator={false}
-      />
-      {washOptionsSheet()}
-    </View>
-  );
-
-  function updateProductWashOption() {
-    const newList = productsList.map((item) => {
-      if (item.id === selectedProduct.id) {
-        const updatedItem = {
-          ...item,
-          washOption: selectedWashOption,
-          amount: selectedOptionAmount,
-        };
-        return updatedItem;
-      }
-      return item;
-    });
-    setProducts(newList);
-  }
-
-  function washOptionsSheet() {
-    return (
-      <BottomSheet
-        isVisible={showWashOptionsSheet}
-        containerStyle={{ backgroundColor: "rgba(0.5, 0.50, 0, 0.50)" }}
-        onBackdropPress={() => {
-          updateState({ showWashOptionsSheet: false });
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: Colors.whiteColor,
-            paddingTop: Sizes.fixPadding * 2.0,
-            paddingHorizontal: Sizes.fixPadding * 2.0,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-            }}
-          >
-            <View>
-              <Text style={{ ...Fonts.blackColor17SemiBold }}>
-                {selectedProduct ? selectedProduct.productType : "T-shirt"}
-              </Text>
-              <Text style={{ ...Fonts.grayColor13Medium }}>Select Task</Text>
-            </View>
-            <TouchableOpacity
-              activeOpacity={0.9}
-              onPress={() => {
-                updateProducts({
-                  updatedList: productsList,
-                  id: selectedProduct.id,
-                  selectedWashOption: selectedWashOption,
-                  selectedOptionAmount: selectedOptionAmount,
-                  category: category,
-                });
-                updateState({ showWashOptionsSheet: false });
-              }}
-              style={styles.addButtonStyle}
-            >
-              <Text style={{ ...Fonts.whiteColor17SemiBold }}>Add</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={{ marginTop: Sizes.fixPadding + 5.0 }}>
-            {washOptionsList.map((item, index) => (
-              <View
-                key={`${item.id}`}
-                style={styles.bottomSheetWashOptionsWrapStyle}
-              >
-                <TouchableOpacity
-                  activeOpacity={0.9}
-                  onPress={() => {
-                    updateState({
-                      selectedWashOption: item.option,
-                      selectedOptionAmount: item.amount,
-                    });
-                  }}
-                  style={{ flexDirection: "row", alignItems: "center" }}
-                >
-                  <View
-                    style={{
-                      ...styles.checkBoxStyle,
-                      backgroundColor:
-                        selectedWashOption == item.option
-                          ? Colors.primaryColor
-                          : Colors.whiteColor,
-                      borderColor:
-                        selectedWashOption == item.option
-                          ? Colors.primaryColor
-                          : Colors.mediumGrayColor,
-                    }}
-                  >
-                    {selectedWashOption == item.option ? (
-                      <MaterialIcons
-                        name="check"
-                        color={Colors.whiteColor}
-                        size={16}
-                      />
-                    ) : null}
-                  </View>
-                  <Text
-                    style={{
-                      marginLeft: Sizes.fixPadding,
-                      ...Fonts.blackColor15Regular,
-                    }}
-                  >
-                    {item.option}
-                  </Text>
-                </TouchableOpacity>
-                <Text style={{ ...Fonts.blackColor15Regular }}>
-                  {item.amount.toFixed(2)}
-                  {` KD`}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </View>
-      </BottomSheet>
-    );
-  }
-};
+}
 
 const styles = StyleSheet.create({
   headerWrapStyle: {
@@ -828,5 +548,3 @@ const styles = StyleSheet.create({
     paddingVertical: Sizes.fixPadding,
   },
 });
-
-export default ItemsList2;

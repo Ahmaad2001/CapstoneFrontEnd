@@ -24,6 +24,8 @@ import AddAddress from "./screens/AddAddress";
 
 import EditProfile from "./screens/EditProfile";
 import TermsAndConditions from "./screens/TermsAndConditions";
+import ItemListScreen from "./screens/ItemListScreen";
+import ChooseLaundry from "./screens/ChooseLaundry";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 // =========
@@ -65,6 +67,8 @@ export default function App() {
               <Stack.Screen name="SavedAddresses" component={SavedAddresses} />
               <Stack.Screen name="AddAddress" component={AddAddress} />
               <Stack.Screen name="EditProfile" component={EditProfile} />
+              <Stack.Screen name="ItemListPage" component={ItemListScreen} />
+              <Stack.Screen name="ChooseLaundry" component={ChooseLaundry} />
               <Stack.Screen
                 name="TermsAndConditions"
                 component={TermsAndConditions}

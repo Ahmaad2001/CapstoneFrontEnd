@@ -167,8 +167,8 @@ export default function Cart() {
                   </Text> */}
                 </View>
                 <Text style={{ ...Fonts.blackColor14Medium }}>
-                  {`$`}
                   {item.amount.toFixed(2)}
+                  {` KD`}
                 </Text>
               </View>
             </View>
@@ -242,8 +242,8 @@ export default function Cart() {
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={{ ...Fonts.blackColor15Medium }}>Sub Total</Text>
           <Text style={{ ...Fonts.blackColor15Medium }}>
-            {`$`}
             {subTotal.toFixed(2)}
+            {` KD`}
           </Text>
         </View>
         <View
@@ -255,15 +255,15 @@ export default function Cart() {
         >
           <Text style={{ ...Fonts.blackColor15Medium }}>Service fee</Text>
           <Text style={{ ...Fonts.blackColor15Medium }}>
-            {`$`}
             {serviceFee.toFixed(2)}
+            {` KD`}
           </Text>
         </View>
         <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
           <Text style={{ ...Fonts.blackColor15SemiBold }}>Amount to Pay</Text>
           <Text style={{ ...Fonts.blackColor15SemiBold }}>
-            {`$`}
             {amountToPay.toFixed(2)}
+            {` KD`}
           </Text>
         </View>
       </View>

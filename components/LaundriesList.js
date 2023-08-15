@@ -324,10 +324,10 @@ import React from "react";
 import { View } from "react-native";
 import NearByLaundries from "./NearByLaundries";
 
-const LaundriesList = () => {
+const LaundriesList = ({ data }) => {
   return (
     <View>
-      <NearByLaundries />
+      <NearByLaundries data={data} />
     </View>
   );
 
