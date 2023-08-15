@@ -247,7 +247,7 @@ const HomeScreen = () => {
 function header() {
   return (
     <LinearGradient
-      colors={["#356cc4", "#4287f5"]}
+      colors={[Colors.primaryColor, "#C9BEFE"]}
       style={{ padding: Sizes.fixPadding * 2.0 }}
     >
       <View
@@ -274,11 +274,27 @@ function header() {
 }
 
 function searchInfo() {
+  const navigation = useNavigation();
+
   return (
-    <TextInput
-      placeholder="Search Laundry Store by name"
-      style={{ marginTop: 5 }}
-    />
+    <TouchableOpacity
+      activeOpacity={0.9}
+      onPress={() => navigation.navigate("Home")}
+      style={styles.searchInfoWrapStyle}
+    >
+      <Feather
+        name="search"
+        size={15}
+        color={Colors.grayColor}
+        style={{
+          marginRight: Sizes.fixPadding,
+          marginTop: Sizes.fixPadding - 12.0,
+        }}
+      />
+      <Text style={{ ...Fonts.grayColor12Regular }}>
+        Search Laundry Store by name
+      </Text>
+    </TouchableOpacity>
   );
 }
 const styles = StyleSheet.create({

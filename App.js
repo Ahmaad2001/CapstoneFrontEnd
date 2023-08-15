@@ -19,6 +19,7 @@ import BaskectContext from "./context/BascketContext";
 import Cart from "./screens/Cart";
 import Payment from "./screens/Payment";
 import ThankYou from "./screens/ThankYou";
+import SavedAddresses from "./screens/SavedAddresses";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 // =========
@@ -57,6 +58,7 @@ export default function App() {
               <Stack.Screen name="Cart" component={Cart} />
               <Stack.Screen name="Payment" component={Payment} />
               <Stack.Screen name="Thankyou" component={ThankYou} />
+              <Stack.Screen name="SavedAddresses" component={SavedAddresses} />
             </Stack.Navigator>
           </UserContext.Provider>
         </BaskectContext.Provider>
