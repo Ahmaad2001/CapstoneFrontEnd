@@ -59,6 +59,16 @@ const getLaundryById = async (LaundryId) => {
   return res.data;
 };
 
+const createOrder = async (order) => {
+  console.log("first");
+  const res = await instance.post("/order/create", order);
+  return res.data;
+};
+const myOrder = async () => {
+  const res = await instance.get("/order/myOrders");
+  return res.data;
+};
+
 export {
   signup,
   signin,
@@ -69,4 +79,6 @@ export {
   getAllLaundries,
   getLaundryById,
   getAllServices,
+  createOrder,
+  myOrder,
 };
