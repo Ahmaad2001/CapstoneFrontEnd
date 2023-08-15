@@ -21,6 +21,9 @@ import Payment from "./screens/Payment";
 import ThankYou from "./screens/ThankYou";
 import SavedAddresses from "./screens/SavedAddresses";
 import AddAddress from "./screens/AddAddress";
+
+import EditProfile from "./screens/EditProfile";
+import TermsAndConditions from "./screens/TermsAndConditions";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 // =========
@@ -61,6 +64,11 @@ export default function App() {
               <Stack.Screen name="Thankyou" component={ThankYou} />
               <Stack.Screen name="SavedAddresses" component={SavedAddresses} />
               <Stack.Screen name="AddAddress" component={AddAddress} />
+              <Stack.Screen name="EditProfile" component={EditProfile} />
+              <Stack.Screen
+                name="TermsAndConditions"
+                component={TermsAndConditions}
+              />
             </Stack.Navigator>
           </UserContext.Provider>
         </BaskectContext.Provider>

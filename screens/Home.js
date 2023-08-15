@@ -263,7 +263,9 @@ function header() {
             style={{ width: 40.0, height: 40.0, borderRadius: 20.0 }}
           />
           <View style={{ flex: 1, marginLeft: Sizes.fixPadding - 5.0 }}>
-            <Text style={{ ...Fonts.whiteColor12Regular }}>Your Location</Text>
+            <Text style={{ ...Fonts.whiteColor12Regular }}>
+              Hello, Ahmad. What do you wanna wash today?
+            </Text>
             {/* {locationInfo()} */}
           </View>
         </View>

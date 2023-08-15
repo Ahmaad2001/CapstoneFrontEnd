@@ -28,7 +28,7 @@ export default function AppNavigation() {
         },
       })}
       tabBarOptions={{
-        activeTintColor: "#007AFF", // Change to your preferred color
+        activeTintColor: "#5d2b87", // Change to your preferred color
         inactiveTintColor: "#A0A0A0", // Change to your preferred color
         labelStyle: {
           fontSize: 12,

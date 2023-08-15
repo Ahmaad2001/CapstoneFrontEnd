@@ -53,6 +53,7 @@ const ProfileScreen = () => {
         >
           {profileInfo()}
           {mainProfileOptions()}
+          {otherProfileOptionsInfo()}
         </ScrollView>
         {logoutDialog()}
       </View>
@@ -145,8 +146,36 @@ const ProfileScreen = () => {
           iconName: "map-pin",
           navigateTo: "SavedAddresses",
         })}
-        {divider()}
-        {logoutOption()}
+      </View>
+    );
+  }
+
+  function otherProfileOptionsInfo() {
+    return (
+      <View>
+        <Text
+          style={{
+            margin: Sizes.fixPadding * 2.0,
+            ...Fonts.blackColor16SemiBold,
+          }}
+        >
+          Other
+        </Text>
+        <View
+          style={{
+            ...styles.whiteBoxStyle,
+            paddingVertical: Sizes.fixPadding * 2.0,
+          }}
+        >
+          {profileOptionSort({
+            option: "Terms & Conditions",
+            iconName: "file-text",
+            navigateTo: "TermsAndConditions",
+          })}
+
+          {divider()}
+          {logoutOption()}
+        </View>
       </View>
     );
   }
