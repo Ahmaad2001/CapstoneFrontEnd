@@ -463,7 +463,7 @@ export default function ItemListScreen() {
             styles.viewCartButtonStyle,
             {
               backgroundColor: "#68619A",
-              opacity: baskect.cart.length > 0 ? 100 : 0,
+              opacity: baskect.cart?.length > 0 ? 100 : 0,
             },
           ]}
         >
