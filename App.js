@@ -15,6 +15,10 @@ import Services from "./screens/Services";
 import { getToken } from "./api/laundries";
 // =========
 import { LogBox } from "react-native";
+import BaskectContext from "./context/BascketContext";
+import Cart from "./screens/Cart";
+import Payment from "./screens/Payment";
+import ThankYou from "./screens/ThankYou";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 // =========
@@ -23,7 +27,7 @@ const Stack = createStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState(false);
-
+  const [baskect, setBaskect] = useState({});
   const checkToken = async () => {
     const token = await getToken();
     if (token) {
@@ -37,16 +41,25 @@ export default function App() {
   return (
     <NavigationContainer>
       <QueryClientProvider client={new QueryClient()}>
-        <UserContext.Provider value={{ user, setUser }}>
-          <Stack.Navigator initialRouteName="Main" headerMode="none">
-            <Stack.Screen name="Main" component={AppNavigation} options={{}} />
-            <Stack.Screen name="LaundryDetails" component={LaundryDetails} />
-            <Stack.Screen name="Signup" component={Signup} />
-            <Stack.Screen name="Signin" component={Signin} />
-            <Stack.Screen name="Checkout" component={Checkout} />
-            <Stack.Screen name="Services" component={Services} />
-          </Stack.Navigator>
-        </UserContext.Provider>
+        <BaskectContext.Provider value={{ baskect, setBaskect }}>
+          <UserContext.Provider value={{ user, setUser }}>
+            <Stack.Navigator initialRouteName="Main" headerMode="none">
+              <Stack.Screen
+                name="Main"
+                component={AppNavigation}
+                options={{}}
+              />
+              <Stack.Screen name="LaundryDetails" component={LaundryDetails} />
+              <Stack.Screen name="Signup" component={Signup} />
+              <Stack.Screen name="Signin" component={Signin} />
+              <Stack.Screen name="Checkout" component={Checkout} />
+              <Stack.Screen name="Services" component={Services} />
+              <Stack.Screen name="Cart" component={Cart} />
+              <Stack.Screen name="Payment" component={Payment} />
+              <Stack.Screen name="Thankyou" component={ThankYou} />
+            </Stack.Navigator>
+          </UserContext.Provider>
+        </BaskectContext.Provider>
       </QueryClientProvider>
     </NavigationContainer>
   );

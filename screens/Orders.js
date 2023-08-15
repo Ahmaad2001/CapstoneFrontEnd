@@ -33,7 +33,7 @@
 
 // export default Orders;
 
-import React from "react";
+import React, { useCallback } from "react";
 import {
   SafeAreaView,
   View,
@@ -45,56 +45,82 @@ import {
   Text,
 } from "react-native";
 import { Colors, Fonts, Sizes } from "../constants/styles";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { myOrder } from "../api/laundries";
+import { useFocusEffect } from "@react-navigation/native";
 
-const orderInProcessList = [
-  {
-    id: "1",
-    laundryName: "Xpress Laundry Services",
-    orderNo: "11001234",
-    amount: 33.0,
-    currentOrderStatusStep: 1,
-    orderStatus: "Confirmed",
-  },
-  {
-    id: "2",
-    laundryName: "Sparkle Dry Cleaners",
-    orderNo: "12349874",
-    amount: 20.0,
-    currentOrderStatusStep: 2,
-    orderStatus: "Pickup",
-  },
-  {
-    id: "3",
-    laundryName: "My Laundry Masters",
-    orderNo: "98746328",
-    amount: 22.0,
-    currentOrderStatusStep: 2,
-    orderStatus: "Shipped",
-  },
-];
+// const orderInProcessList = [
+//   {
+//     id: "1",
+//     laundryName: "Xpress Laundry Services",
+//     orderNo: "11001234",
+//     amount: 33.0,
+//     currentOrderStatusStep: 1,
+//     orderStatus: "Confirmed",
+//   },
+//   {
+//     id: "2",
+//     laundryName: "Sparkle Dry Cleaners",
+//     orderNo: "12349874",
+//     amount: 20.0,
+//     currentOrderStatusStep: 2,
+//     orderStatus: "Pickup",
+//   },
+//   {
+//     id: "3",
+//     laundryName: "My Laundry Masters",
+//     orderNo: "98746328",
+//     amount: 22.0,
+//     currentOrderStatusStep: 2,
+//     orderStatus: "Shipped",
+//   },
+// ];
 
-const pastOrdersList = [
-  {
-    id: "1",
-    laundryName: "Sparkle Dry Cleaners",
-    orderNo: "11001234",
-    amount: 33.0,
-  },
-  {
-    id: "2",
-    laundryName: "Fiesta Laundromat",
-    orderNo: "12349874",
-    amount: 20.0,
-  },
-  {
-    id: "3",
-    laundryName: "My Laundry Masters",
-    orderNo: "98746328",
-    amount: 22.0,
-  },
-];
+// const pastOrdersList = [
+//   {
+//     id: "1",
+//     laundryName: "Sparkle Dry Cleaners",
+//     orderNo: "11001234",
+//     amount: 33.0,
+//   },
+//   {
+//     id: "2",
+//     laundryName: "Fiesta Laundromat",
+//     orderNo: "12349874",
+//     amount: 20.0,
+//   },
+//   {
+//     id: "3",
+//     laundryName: "My Laundry Masters",
+//     orderNo: "98746328",
+//     amount: 22.0,
+//   },
+// ];
 
 const OrdersScreen = ({ navigation }) => {
+  const { data, refetch } = useQuery({
+    queryKey: ["orders"],
+    queryFn: () => myOrder(),
+  });
+
+  useFocusEffect(
+    useCallback(() => {
+      refetch();
+    }, [])
+  );
+  console.log(data);
+  const pastOrdersList = [];
+  const orderInProcessList = data?.reverse()?.map((item, index) => {
+    return {
+      id: index + 1,
+      laundryName: item.laundry.name,
+      orderNo: item._id,
+      amount: item.amountToPay,
+      currentOrderStatusStep: 1,
+      orderStatus: "Confirmed",
+    };
+  });
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
@@ -195,7 +221,7 @@ const OrdersScreen = ({ navigation }) => {
             ...Fonts.blackColor16SemiBold,
           }}
         >
-          Past Orders
+          {/* Past Orders */}
         </Text>
         <FlatList
           data={pastOrdersList}
@@ -233,7 +259,7 @@ const OrdersScreen = ({ navigation }) => {
           <View style={{ alignItems: "flex-end" }}>
             <Text style={{ ...Fonts.blackColor16SemiBold }}>
               {`$`}
-              {item.amount.toFixed(2)}
+              {(+item.amount).toFixed(2)}
             </Text>
             <Text style={{ ...Fonts.primaryColor14Medium }}>
               {item.orderStatus}

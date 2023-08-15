@@ -297,17 +297,17 @@ const Laundrydetails = ({ navigation, route }) => {
             {contactDetail({ data })}
             {divider()}
             {tabBar()}
-            {selectedTabIndex == 0 ? aboutInfo({ data }) : itemsInfo()}
+            {selectedTabIndex == 0 ? aboutInfo({ data }) : itemsInfo({ data })}
           </View>
         </CollapsingToolbar>
       </View>
     </SafeAreaView>
   );
 
-  function itemsInfo() {
+  function itemsInfo({ data }) {
     return (
       <View>
-        <ItemsList2 />
+        <ItemsList2 data={data} />
       </View>
     );
     // return (

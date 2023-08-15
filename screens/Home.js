@@ -231,39 +231,8 @@ const HomeScreen = () => {
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />
       <View style={{ flex: 0.3 }}>{header()}</View>
-      <View
-        style={{
-          flex: 0.15,
-          flexDirection: "row",
-          justifyContent: "center",
-          // alignItems: "center",
-        }}
-      >
-        <View
-          style={{
-            paddingHorizontal: 10,
-            borderColor: "black",
-            borderWidth: 1,
-            borderRadius: 12,
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 22,
-              marginRight: 5,
-            }}
-          >
-            Create your basket
-          </Text>
-          <MaterialCommunityIcons name="basket" size={22} />
-        </View>
-        {/* <Button title="Delivery" />
-        <Button title="Pick up" /> */}
-      </View>
-      <ScrollView style={{ flex: 0.6 }}>
+
+      <ScrollView style={{ flex: 0.7 }}>
         <View style={styles.container}>
           <LaundriesList
             data={filteredLaundries}
