@@ -12,6 +12,7 @@ import {
 import { Colors, Fonts, Sizes } from "../constants/styles";
 import { MaterialIcons } from "@expo/vector-icons";
 import MapView, { Marker } from "react-native-maps";
+import { useNavigation } from "@react-navigation/native";
 
 const savedAddressesList = [
   {
@@ -29,9 +30,8 @@ const savedAddressesList = [
   {
     id: "3",
     addressType: "Other",
-    address:
-      "3891 Ranchview Dr. Richardson Dakota Spruce Drive Celina California 62639",
-    latlong: { latitude: 37.33233141, longitude: -122.0312186 },
+    address: "Salmiya, Marina Mall, Near Gulf Street",
+    latlong: { latitude: 29.337, longitude: 47.9926 },
   },
 ];
 
@@ -48,10 +48,11 @@ const SavedAddresses = ({ navigation }) => {
   );
 
   function addNewAddressButton() {
+    const navigation = useNavigation();
     return (
       <TouchableOpacity
         activeOpacity={0.9}
-        onPress={() => navigation.push("AddAddress")}
+        onPress={() => navigation.navigate("AddAddress")}
         style={styles.addNewAddressButtonStyle}
       >
         <Text style={{ ...Fonts.whiteColor17SemiBold }}>Add new Address</Text>

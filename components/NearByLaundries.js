@@ -23,89 +23,93 @@ function NearByLaundries() {
     queryKey: ["laundry"],
     queryFn: () => getAllLaundries(),
   });
-  const renderItem = ({ item }) => (
-    <TouchableOpacity
-      activeOpacity={0.9}
-      onPress={() => navigation.navigate("LaundryDetails", { item: item })}
-      style={styles.nearByLaundryWrapStyle}
-    >
-      <Image
-        style={{
-          width: 90.0,
-          height: 90.0,
-          borderRadius: Sizes.fixPadding - 5.0,
-        }}
-        source={{
-          uri: BASE_URL + item.image,
-        }}
-      />
-      <View style={{ flex: 1, marginLeft: Sizes.fixPadding + 5.0 }}>
-        <View
+  const renderItem = ({ item }) => {
+    console.log(BASE_URL + item.image);
+
+    return (
+      <TouchableOpacity
+        activeOpacity={0.9}
+        onPress={() => navigation.navigate("LaundryDetails", { item: item })}
+        style={styles.nearByLaundryWrapStyle}
+      >
+        <Image
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "space-between",
+            width: 90.0,
+            height: 90.0,
+            borderRadius: Sizes.fixPadding - 5.0,
           }}
-        >
-          <Text
-            numberOfLines={1}
-            style={{ lineHeight: 17.0, flex: 1, ...Fonts.blackColor15Medium }}
-          >
-            {item.name}
-          </Text>
+          source={{
+            uri: BASE_URL + item.image,
+          }}
+        />
+        <View style={{ flex: 1, marginLeft: Sizes.fixPadding + 5.0 }}>
           <View
             style={{
-              marginLeft: Sizes.fixPadding - 5.0,
               flexDirection: "row",
               alignItems: "center",
+              justifyContent: "space-between",
             }}
           >
+            <Text
+              numberOfLines={1}
+              style={{ lineHeight: 17.0, flex: 1, ...Fonts.blackColor15Medium }}
+            >
+              {item.name}
+            </Text>
+            <View
+              style={{
+                marginLeft: Sizes.fixPadding - 5.0,
+                flexDirection: "row",
+                alignItems: "center",
+              }}
+            >
+              <MaterialIcons
+                name="star"
+                color={Colors.yellowColor}
+                size={16}
+                style={{
+                  marginTop: Sizes.fixPadding - 13.0,
+                  marginRight: Sizes.fixPadding - 5.0,
+                }}
+              />
+              <Text style={{ ...Fonts.blackColor13Medium }}>{item.rating}</Text>
+            </View>
+          </View>
+          <View style={styles.laundryLocationInfoWrapStyle}>
             <MaterialIcons
-              name="star"
-              color={Colors.yellowColor}
+              name="location-pin"
+              color={Colors.grayColor}
               size={16}
+              style={{
+                marginTop: Sizes.fixPadding - 11.0,
+                marginRight: Sizes.fixPadding - 5.0,
+              }}
+            />
+            <Text
+              numberOfLines={1}
+              style={{ flex: 1, ...Fonts.grayColor13Regular }}
+            >
+              {item.location}
+            </Text>
+          </View>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <MaterialIcons
+              name="access-time"
+              color={Colors.grayColor}
+              size={15}
               style={{
                 marginTop: Sizes.fixPadding - 13.0,
                 marginRight: Sizes.fixPadding - 5.0,
               }}
             />
-            <Text style={{ ...Fonts.blackColor13Medium }}>{item.rating}</Text>
+            <Text style={{ flex: 1, ...Fonts.grayColor13Regular }}>
+              {item.workingHours}
+            </Text>
           </View>
         </View>
-        <View style={styles.laundryLocationInfoWrapStyle}>
-          <MaterialIcons
-            name="location-pin"
-            color={Colors.grayColor}
-            size={16}
-            style={{
-              marginTop: Sizes.fixPadding - 11.0,
-              marginRight: Sizes.fixPadding - 5.0,
-            }}
-          />
-          <Text
-            numberOfLines={1}
-            style={{ flex: 1, ...Fonts.grayColor13Regular }}
-          >
-            {item.location}
-          </Text>
-        </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <MaterialIcons
-            name="access-time"
-            color={Colors.grayColor}
-            size={15}
-            style={{
-              marginTop: Sizes.fixPadding - 13.0,
-              marginRight: Sizes.fixPadding - 5.0,
-            }}
-          />
-          <Text style={{ flex: 1, ...Fonts.grayColor13Regular }}>
-            {item.openTime} to {item.closeTime}
-          </Text>
-        </View>
-      </View>
-    </TouchableOpacity>
-  );
+      </TouchableOpacity>
+    );
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: Colors.bodyBackColor }}>
       <StatusBar translucent={false} backgroundColor={Colors.primaryColor} />

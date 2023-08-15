@@ -275,6 +275,17 @@ function header() {
 
 function searchInfo() {
   const navigation = useNavigation();
+  //   const [searchTerm, setSearchTerm] = useState("");
+  //   const [locationFilter, setLocationFilter] = useState("");
+  //   const filteredLaundries = laundries?.filter((laundry) => {
+  //     const nameMatch =
+  //       laundry.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //       searchTerm === "";
+  //     const locationMatch =
+  //       laundry.location.toLowerCase().includes(locationFilter.toLowerCase()) ||
+  //       locationFilter === "";
+  //     return nameMatch && locationMatch;
+  //   });
 
   return (
     <TouchableOpacity

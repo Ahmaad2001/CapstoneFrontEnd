@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     fontSize: 32,
     fontWeight: "bold",
     marginBottom: 32,
-    color: "#ffa500",
+    color: "#a769f0",
   },
   input: {
     width: "80%",
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     marginTop: 10,
-    backgroundColor: "#ffa500",
+    backgroundColor: "#a769f0",
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
@@ -142,7 +142,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   registerText: {
-    color: "#ffa500",
+    color: "#a769f0",
     fontWeight: "bold",
   },
 });
