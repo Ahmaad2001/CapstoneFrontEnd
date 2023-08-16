@@ -235,7 +235,7 @@ const HomeScreen = () => {
             flexDirection: "row",
           }}
         >
-          <Text>Create your baskect</Text>
+          <Text>Create your bascket</Text>
           <View
             style={{
               borderWidth: 2,
@@ -258,7 +258,7 @@ const HomeScreen = () => {
                 navigation.navigate("ItemListPage");
               }}
             >
-              <Text>Baskect</Text>
+              <Text>Click to create your bascket</Text>
             </TouchableOpacity>
           </View>
         </View>

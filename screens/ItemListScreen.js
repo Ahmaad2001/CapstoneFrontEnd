@@ -11,9 +11,9 @@ import {
 import React, { useContext, useEffect, useState } from "react";
 import ItemsList2 from "../components/ItemsList2";
 import BaskectContext from "../context/BascketContext";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { Fonts, Sizes } from "../constants/styles";
-import { Octicons } from "@expo/vector-icons";
+
+import { Colors, Fonts, Sizes } from "../constants/styles";
+import { MaterialIcons, Octicons } from "@expo/vector-icons";
 import { BottomSheet } from "react-native-elements";
 import { useNavigation } from "@react-navigation/native";
 
@@ -335,7 +335,7 @@ export default function ItemListScreen() {
       return (
         <BottomSheet
           isVisible={showWashOptionsSheet}
-          containerStyle={{ backgroundColor: "rgba(0.5, 0.50, 0, 0.50)" }}
+          containerStyle={{ backgroundColor: "rgba(0, 0, 0, 0.50)" }}
           onBackdropPress={() => {
             updateState({ showWashOptionsSheet: false });
           }}
